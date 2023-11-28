@@ -1,0 +1,30 @@
+/* src/index.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base{
+
+  /* nav */
+  .mediumDropDown{
+    @apply static pr-[3svw] w-fit pt-0 flex-row gap-5 border-none divide-none
+  }
+
+  .navContainer{
+    @apply flex w-full justify-between items-center font-bold border-b border-black h-[8svh] max-w-[1200px] m-auto
+  }
+
+  .navItem{
+    @apply m-auto py-5 w-full text-center hover:underline text-sm
+  }
+
+  .active{
+    @apply underline
+  }
+
+  .logo{
+    @apply flex gap-1 items-center pl-[3svw] font-serif 
+  }
+
+
+}
