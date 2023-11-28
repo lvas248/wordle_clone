@@ -10,11 +10,10 @@ function Navbar() {
         setIsOpen(!isOpen)
     }
 
-    const renderNavItems = [ 'home', 'page1', 'page2', 'page3' ].map( n =>{
+    const renderNavItems = [ 'home', 'signup', 'page2', 'page3' ].map( n =>{
         return  <Link 
                     key={n}
                     onClick={toggleOpen}
-                    activeClassName='active'
                     className={`navItem`}
                     to={`/${n}`}
                 >{n}</Link>
@@ -23,7 +22,7 @@ function Navbar() {
 
     return ( 
     
-        <div className='navContainer'>
+        <div className='navContainer '>
                 
             <button onClick={()=>console.log('navigate Home')} className='logo' >
                 <p>App Logo</p>
@@ -33,7 +32,7 @@ function Navbar() {
                 <Hamburger toggled={isOpen} toggle={setIsOpen} size={25}  />
             </div>
 
-            <div className={`absolute top-[8svh] w-full z-50 font-bold flex flex-col divide-y divide-slate-300 md:mediumDropDown transform-h duration-300  ${isOpen ? ' border-b border-black max-h-[100svh]': 'max-h-0 overflow-hidden md:flex md:max-h-fit' } `}
+            <div className={`absolute top-[8svh] bg-white w-full z-50 font-bold flex flex-col divide-y divide-slate-300 md:mediumDropDown transform-h duration-300  ${isOpen ? ' border-b border-black max-h-[100svh]': 'max-h-0 overflow-hidden md:flex md:max-h-fit' } `}
             >
                 {renderNavItems}
             </div>

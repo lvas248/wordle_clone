@@ -2,6 +2,7 @@ import { useState, React, createContext } from 'react';
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './Layout/Navbar';
 import Home from './Pages/Home';
+import Signup from './Pages/Signup';
 
 export const UserContext = createContext()
 
@@ -17,9 +18,14 @@ function App() {
 
         <Navbar />
 
+
+
         <Routes>
 
+          <Route path='/signup' element={<Signup />}/>
+
           <Route path='/home' element={<Home />} />
+
 
 
         </Routes>

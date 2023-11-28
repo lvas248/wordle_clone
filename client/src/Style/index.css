@@ -7,7 +7,7 @@
 
   /* nav */
   .mediumDropDown{
-    @apply static pr-[3svw] w-fit pt-0 flex-row gap-5 border-none divide-none
+    @apply static pr-[3svw] w-fit pt-0 flex-row gap-5 border-none divide-none 
   }
 
   .navContainer{
@@ -24,6 +24,32 @@
 
   .logo{
     @apply flex gap-1 items-center pl-[3svw] font-serif 
+  }
+
+  /* error */
+
+  .error{
+    @apply text-red-500 font-extralight text-sm
+  }
+
+  /* form  */
+  .form{
+    @apply w-4/5 sm:w-1/2 max-w-[400px] mx-auto place-content-center flex flex-col gap-4
+  }
+  .formTitle{
+    @apply text-[30px] pt-[40px] font-serif text-center
+  }
+  .inputContainer{
+    @apply flex flex-col gap-1
+  }
+  .inputLabel{
+    @apply text-[14px] font-bold font-sans
+  }
+  .formInput {
+    @apply border-black border p-[12px] h-[2.75rem] rounded-sm
+  }
+  .formSubmit{
+    @apply bg-black text-white font-semibold text-[1em] h-[2.75rem] rounded-sm w-full
   }
 
 
