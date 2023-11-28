@@ -40,8 +40,6 @@ function Signup(){
         })
     }
 
-    console.log('rendered')
-
     return ( 
         <form onSubmit={submitSignup} className='form' >
 
