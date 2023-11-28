@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useContext } from 'react'
 import { UserContext } from '../App'
+import { useNavigate } from 'react-router-dom'
 
 function Signup(){
 
@@ -14,12 +15,13 @@ function Signup(){
         password_confirmation: ''
     })
 
+    const navigate = useNavigate()
+
     function updateSignupObj(e){
         const copy = {...signupObj}
         copy[e.target.name] = e.target.value
         setSignupObj(copy)
     }
-
 
     function submitSignup(e){
         e.preventDefault()
@@ -32,7 +34,10 @@ function Signup(){
         }).then( res => {
             if(res.ok){
                 res.json()
-                .then(data => setUser({...data, loggedIn: true}))
+                .then(data => {
+                    setUser({...data, loggedIn: true})
+                    navigate('/home')
+                })
             }else{
                 res.json()
                 .then(data => setErrors(data.errors))
@@ -41,6 +46,7 @@ function Signup(){
     }
 
     return ( 
+        
         <form onSubmit={submitSignup} className='form' >
 
             <p className='formTitle'>Create your free account</p>

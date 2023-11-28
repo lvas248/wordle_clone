@@ -10,7 +10,7 @@ function Navbar() {
         setIsOpen(!isOpen)
     }
 
-    const renderNavItems = [ 'home', 'signup', 'page2', 'page3' ].map( n =>{
+    const renderNavItems = [ 'home', 'signup', 'login', 'page3' ].map( n =>{
         return  <Link 
                     key={n}
                     onClick={toggleOpen}

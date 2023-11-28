@@ -5,6 +5,10 @@
 
 @layer base{
 
+  .app{
+    @apply bg-[#e3e3e1] min-h-[100svh]
+  }
+
   /* nav */
   .mediumDropDown{
     @apply static pr-[3svw] w-fit pt-0 flex-row gap-5 border-none divide-none 

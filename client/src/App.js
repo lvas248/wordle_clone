@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './Layout/Navbar';
 import Home from './Pages/Home';
 import Signup from './Pages/Signup';
+import Login from './Pages/Login';
 
 export const UserContext = createContext()
 
@@ -22,6 +23,8 @@ function App() {
 
 
         <Routes>
+
+          <Route path='/login' element={<Login />}/>
 
           <Route path='/signup' element={<Signup />}/>
 
