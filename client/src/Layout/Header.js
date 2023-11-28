@@ -7,7 +7,15 @@ import settings from '../Assets/Icons/icons8-settings-100.png'
 
 function Header() {
 
-    const [ user, ] = useContext(UserContext)
+    const [ user, setUser ] = useContext(UserContext)
+
+    function logout(){
+        fetch('/logout',{
+          method: 'DELETE'
+        }).then(res => {
+            if(res.ok) setUser({loggedIn: false})} 
+          )
+      }
 
     return ( 
     <div className='header'>
@@ -19,7 +27,7 @@ function Header() {
             <button> <img  className='headerIcon' alt='text' src={howTo} /> </button>
             <button> <img className='headerIcon' alt='text' src={stats} /> </button>
             <button> <img className='headerIcon' alt='text' src={settings} /> </button>
-
+            <button onClick={logout} className='text-sm border border-black px-6 rounded-xl '>Logout</button>
         </div>
 
 
