@@ -4,6 +4,8 @@ import Navbar from './Layout/Navbar';
 import Home from './Pages/Home';
 import Signup from './Pages/Signup';
 import Login from './Pages/Login';
+import Landing from './Pages/Landing';
+import Header from './Layout/Header';
 
 export const UserContext = createContext()
 
@@ -18,9 +20,7 @@ function App() {
 
       <div className="App">
 
-        <Navbar />
-
-
+        <Header />
 
         <Routes>
 
@@ -30,7 +30,7 @@ function App() {
 
           <Route path='/home' element={<Home />} />
 
-
+          <Route path='/' element={<Landing />} />
 
         </Routes>
 

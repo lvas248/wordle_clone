@@ -26,9 +26,9 @@
     @apply underline
   }
 
-  .logo{
+  /* .logo{
     @apply flex gap-1 items-center pl-[3svw] font-serif 
-  }
+  } */
 
   /* error */
 
@@ -38,7 +38,7 @@
 
   /* form  */
   .form{
-    @apply w-4/5 sm:w-1/2 max-w-[400px] mx-auto place-content-center flex flex-col gap-4
+    @apply w-4/5 sm:w-1/2 max-w-[400px] mx-auto place-content-center flex flex-col gap-4 
   }
   .formTitle{
     @apply text-[30px] pt-[40px] font-serif text-center
@@ -54,6 +54,39 @@
   }
   .formSubmit{
     @apply bg-black text-white font-semibold text-[1em] h-[2.75rem] rounded-sm w-full
+  }
+
+  /* Landing */
+
+  .landingTitle{
+    @apply text-[36px] md:text-[44px] lg:text-[50px] text-center font-bold font-sans tracking-tight
+  }
+  .landing{
+    @apply grid min-h-[95svh] place-content-center bg-[#e3e3e1] gap-5
+  }
+  .landingBtns{
+    @apply flex flex-col md:flex-row-reverse gap-2 sm:gap-4
+  }
+  .landingSubText{
+    @apply text-[25px] md:text-[32px] lg:text-[38px] font-light sm:w-3/5 mx-auto tracking-tight
+  }
+  .landingbuttons{
+    @apply px-[32px] font-sans text-[16px] border border-black rounded-3xl h-[3em] w-[155px] sm:w-[180px] mx-auto
+  }
+
+  /* header */
+
+  .header{
+    @apply w-full h-[5svh] shadow-md flex justify-between px-[5vw] bg-[#e3e3e1]
+  }
+  .logo{
+    @apply font-bold my-auto
+  }
+  .headerBtnContainer{
+    @apply my-auto  gap-2
+  }
+  .headerIcon {
+    @apply h-[2.5svh]
   }
 
 

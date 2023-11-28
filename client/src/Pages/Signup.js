@@ -36,7 +36,7 @@ function Signup(){
                 res.json()
                 .then(data => {
                     setUser({...data, loggedIn: true})
-                    navigate('/home')
+                    navigate('/')
                 })
             }else{
                 res.json()
