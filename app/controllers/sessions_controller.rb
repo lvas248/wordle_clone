@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
     def create #login
         user = User.find_by(email: user_params[:email])
         if(user&.authenticate(user_params[:password]))
+            session[:user_id] = user.id
             render json: user, status: :ok
         else 
             render json: { error: 'Invalid email or password'}, status: :unauthorized
