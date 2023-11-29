@@ -58,7 +58,7 @@
 
   /* Landing */
   .landing{
-    @apply grid min-h-[100svh] place-content-center bg-[#e3e3e1] gap-5
+    @apply grid min-h-[95svh] place-content-center bg-[#e3e3e1] gap-5
   }
   .landingTitle{
     @apply text-[36px] md:text-[44px] lg:text-[50px] text-center font-bold font-sans tracking-tight

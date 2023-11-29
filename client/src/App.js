@@ -24,7 +24,7 @@ function App() {
 
     <UserContext.Provider value={ [user, setUser]}>
 
-      <div className="App">
+      <div className="App bg-[#e3e3e1] min-h-screen">
 
         <Header />
 
