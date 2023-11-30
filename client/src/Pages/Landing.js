@@ -15,7 +15,7 @@ function Landing() {
             <div className='text-center'>
                 <img className='mx-auto' alt='text' src={grid} />
                 <h1 className='landingTitle'>Wordle Clone</h1>
-                <p className='landingSubText'>Get 6 chances to guess a 6-letter word.</p>
+                <p className='landingSubText'>Get 6 chances to guess a 5-letter word.</p>
             </div>
 
             <div className='landingBtns'>                       

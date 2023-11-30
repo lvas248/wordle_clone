@@ -88,5 +88,14 @@
     @apply h-[2.5svh]
   }
 
+  /* Game */
+  .gameInput{
+    @apply h-[62px] w-[62px] border border-slate-400 shadow text-[32px] font-bold text-center uppercase caret-transparent
+  }
+
+  .autoInput > .react-code-input {
+    @apply border-2 border-black
+  }
+
 
 }

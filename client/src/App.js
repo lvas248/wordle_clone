@@ -6,7 +6,7 @@ import Signup from './Pages/Signup';
 import Login from './Pages/Login';
 import Landing from './Pages/Landing';
 import Header from './Layout/Header';
-
+import Game from './Pages/Game/Game';
 export const UserContext = createContext()
 
 function App() {
@@ -29,6 +29,8 @@ function App() {
         <Header />
 
         <Routes>
+
+          <Route path='/play' element={<Game />}/>
 
           <Route path='/login' element={<Login />}/>
 
