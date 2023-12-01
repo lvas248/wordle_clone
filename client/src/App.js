@@ -21,7 +21,10 @@ function App() {
   }
   useEffect(()=>{
     fetch('/me').then(res => {
-      if(res.ok) res.json().then(data => setUser({...data, loggedIn: true}))
+      if(res.ok) res.json().then(data => {
+          console.log(data)
+          setUser({...data, loggedIn: true}
+        )})
     })
   },[])
 
