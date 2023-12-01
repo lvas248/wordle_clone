@@ -6,7 +6,7 @@ import stats from '../Assets/Icons/icons8-bar-graph-100.png'
 import settings from '../Assets/Icons/icons8-settings-100.png'
 
 
-function Header() {
+function Header({ toggleStatistics}) {
 
     const [ user, setUser ] = useContext(UserContext)
     const navigate = useNavigate()
@@ -31,7 +31,7 @@ function Header() {
         <div className={`${ user.loggedIn ? 'flex' : 'hidden'} headerBtnContainer`}>
 
             <button> <img  className='headerIcon' alt='text' src={howTo} /> </button>
-            <button> <img className='headerIcon' alt='text' src={stats} /> </button>
+            <button onClick={toggleStatistics}> <img className='headerIcon' alt='text' src={stats} /> </button>
             <button> <img className='headerIcon' alt='text' src={settings} /> </button>
             <button onClick={logout} className='text-sm border border-black px-6 rounded-xl '>Logout</button>
        

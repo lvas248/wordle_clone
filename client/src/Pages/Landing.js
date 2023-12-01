@@ -1,12 +1,23 @@
 import grid from '../Assets/Icons/icons8-grid-100.png'
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from '../App';
+import loadingIcon from '../Assets/Icons/loading.png'
 
 function Landing() {
 
     const navigate = useNavigate()
     const [ user ] = useContext(UserContext)
+    const [ playLoading, setPlayLoading ] = useState(false)
+
+    function handlePlayClick(){
+        setPlayLoading(true)
+        fetch('/game',{
+            method: 'POST'
+        }).then(res => {
+            if(res.ok) navigate('/play')
+        })
+    }
 
 
     return ( 
@@ -19,7 +30,7 @@ function Landing() {
             </div>
 
             <div className='landingBtns'>                       
-                <button onClick={()=>navigate('/play')} className='landingbuttons bg-black text-white'>Play</button>
+                <button onClick={handlePlayClick} className='landingbuttons bg-black text-white'>{playLoading ? <img className='loading' alt='loading' src={loadingIcon} /> : 'Play' }</button>
                 <button onClick={()=>navigate('/login')} className={`landingbuttons  ${user.loggedIn && 'hidden'}`}>Log in</button>
                 <button onClick={()=>navigate('/how-to')} className='landingbuttons'> How to Play</button>
             </div>

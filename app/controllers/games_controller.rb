@@ -3,14 +3,15 @@ class GamesController < ApplicationController
     def create
         user = get_user
         if user
-            game = user.games.create!
-            head :created
+            game = user.games.find_by(status: 'pending') || user.games.create!  
+            render json: game, status: :created
         else
             guest = get_guest
             game = guest.games.create!
-            head :created
+            render json: game, status: :created
         end
     end
+
 
 
     private

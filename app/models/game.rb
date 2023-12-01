@@ -5,6 +5,8 @@ class Game < ApplicationRecord
   belongs_to :user
   belongs_to :word
 
+  has_many :guesses, dependent: :destroy
+
   private
 
   def assign_word

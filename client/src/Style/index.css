@@ -30,6 +30,10 @@
     @apply flex gap-1 items-center pl-[3svw] font-serif 
   } */
 
+  .loading{
+    @apply h-[30px] animate-spin mx-auto
+  }
+
   /* error */
 
   .error{
@@ -90,7 +94,7 @@
 
   /* Game */
   .gameInput{
-    @apply h-[62px] w-[62px] border border-slate-400 shadow text-[32px] font-bold text-center uppercase caret-transparent
+    @apply h-[62px] w-[62px] border border-slate-400 shadow text-[32px] font-bold text-center uppercase caret-transparent 
   }
 
   .autoInput > .react-code-input {

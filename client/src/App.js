@@ -7,12 +7,18 @@ import Login from './Pages/Login';
 import Landing from './Pages/Landing';
 import Header from './Layout/Header';
 import Game from './Pages/Game/Game';
+import StatisticsPage from './Pages/Game/StatisticsPage';
 export const UserContext = createContext()
 
 function App() {
 
   const [ user, setUser ] = useState({ loggedIn: false })
+  const [ displayStatistics, setDisplayStatistics ] = useState(false)
 
+  function toggleStatistics(){
+    console.log('asdf')
+    setDisplayStatistics(!displayStatistics)
+  }
   useEffect(()=>{
     fetch('/me').then(res => {
       if(res.ok) res.json().then(data => setUser({...data, loggedIn: true}))
@@ -24,13 +30,15 @@ function App() {
 
     <UserContext.Provider value={ [user, setUser]}>
 
-      <div className="App bg-[#e3e3e1] min-h-screen">
+      <div className="App bg-[#e3e3e1] min-h-screen relative">
 
-        <Header />
+        <Header toggleStatistics={toggleStatistics}/>
+
+        <StatisticsPage display={displayStatistics} toggleDisplay={toggleStatistics}/>
 
         <Routes>
 
-          <Route path='/play' element={<Game />}/>
+          <Route path='/play' element={<Game toggleStatistics={toggleStatistics}/>}/>
 
           <Route path='/login' element={<Login />}/>
 
