@@ -16,7 +16,6 @@ function App() {
   const [ displayStatistics, setDisplayStatistics ] = useState(false)
 
   function toggleStatistics(){
-    console.log('asdf')
     setDisplayStatistics(!displayStatistics)
   }
   useEffect(()=>{

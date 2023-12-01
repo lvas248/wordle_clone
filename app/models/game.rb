@@ -13,4 +13,6 @@ class Game < ApplicationRecord
     self.word = Word.all.sample
   end
 
+
+
 end

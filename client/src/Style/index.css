@@ -101,5 +101,13 @@
     @apply border-2 border-black
   }
 
+  /* Stats */
+  .stat{
+    @apply text-[44px] font-medium font-sans
+  }
+  .statContainer{
+    @apply flex flex-col text-center text-[12px] font-light
+  }
+
 
 }

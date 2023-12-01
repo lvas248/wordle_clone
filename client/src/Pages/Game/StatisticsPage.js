@@ -12,38 +12,56 @@ function StatisticsPage({display, toggleDisplay}) {
         toggleDisplay()
     }
 
-    const winPercentage = user?.stats?.games_won / user?.stats?.games_played * 100
+    const winPercentage = Math.round(user?.stats?.games_won / user?.stats?.games_played * 100)
 
     return ( 
-        <div className={`${display ? 'grid' : 'hidden' } bg-white text-black absolute top-[20%] right-[15vw] h-[55svh] w-[70vw] drop-shadow-xl z-50 rounded-2xl`}>
+        <div className={`${display ? 'grid' : 'hidden' } bg-white text-black absolute top-0 h-[100svh] w-[100vw] grid place-content-center z-50`}>
             
-                <p className='text-2xl font-bold uppercase m-auto'>statistics</p>
-                <div className='flex justify-around'>
+            <button onClick={navigateHome} className='px-5 h-fit w-fit ml-auto rounded-2xl mb-4 '>X</button>
+
+            <div className='bg-white h-[50svh] w-[35vw] max-w-[343px] min-w-[300px] flex flex-col gap-4 '>
+                
+                <div>
+
+                    <p className='uppercase text-[14px] font-bold'>statistics</p>
                     
-                    <div className='flex flex-col text-center text-sm'>
-                        <p className='text-3xl font-semibold'>{user?.stats?.games_played}</p>
-                        <p>Played</p>
-                    </div>
+                    <div className='flex justify-between'>
+                        <div className='statContainer'>
+                            <p className='stat'>{user?.stats?.games_played}</p>
+                            <p>Played</p>
+                        </div>
 
-                    <div className='flex flex-col text-center text-sm'>
-                        <p className='text-3xl font-semibold'>{winPercentage}</p>
-                        <p>Win %</p>
-                    </div>
+                        <div className='statContainer'>
+                            <p className='stat'>{winPercentage || 0}</p>
+                            <p>Win %</p>
+                        </div>
 
-                    <div className='flex flex-col text-center text-sm'>
-                        <p className='text-3xl font-semibold'>?</p>
-                        <p>Streak</p>
-                    </div>
+                        <div className='statContainer'>
+                            <p className='stat'>{user?.stats?.current_streak}</p>
+                            <p>Streak</p>
+                        </div>
 
-                    <div className='flex flex-col text-center text-sm'>
-                        <p className='text-3xl font-semibold'>?</p>
-                        <p>Max</p>
-                        <p>Streak</p>
+                        <div className='statContainer'>
+                            <p className='stat'>{user?.stats?.best_streak}</p>
+                            <p>Max</p>
+                            <p>Streak</p>
+                        </div>
+                    
                     </div>
 
                 </div>
 
-                <button onClick={navigateHome} className='border border-black px-5 h-fit w-fit m-auto rounded-2xl'>home</button>
+                <div>
+                    <p className='uppercase text-[14px] font-bold'>guess distribution</p>
+                    <div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
             
 
 

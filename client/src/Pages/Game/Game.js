@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react'
+import { useContext } from 'react'
+import { UserContext } from '../../App'
 import WinnerPage from './StatisticsPage'
 import Row from './Row'
 
 function Game({toggleStatistics}) {
+
+    const [ user, setUser ] = useContext(UserContext)
+
+    const [ displayMessage, setDisplayMessage ] = useState({ display: false, message: ''})
 
     const [ gameBoard, setGameBoard ] = useState([
         [{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false }],
@@ -77,43 +83,75 @@ function Game({toggleStatistics}) {
     }
 
     function submitAttempt(e){
-        e.preventDefault()
-        fetch('/guess',{
-            method: 'POST',
-            headers: {
-                'Content-type':'application/json'
-            },
-            body: JSON.stringify({ guess: { word: gameBoard[rowNumber].map( a => a.char).join('')}})
-        })
-        .then( res => {
-            if(res.ok){
-                res.json()
-                .then(data => {
-                    console.log(data)
-                    const copy = [...gameBoard]
-                    copy[rowNumber] = data.result
-                    setGameBoard(copy)
-                    if(data.game_status === 'won'){
-                        console.log('won')
-                        setTimeout(()=>{
-                            toggleStatistics()
-                        },1000)
-                    }
-                    const nextRow = document.getElementById(rowNumber+1)
-                    nextRow.firstChild.focus()
-                    updateRowNumber()                        
-                    
 
-                })
-            }else{ res.json().then(error => console.log(error))}
-        })
+        e.preventDefault()
+        if(rowNumber < 6){
+            fetch('/guess',{
+                method: 'POST',
+                headers: {
+                    'Content-type':'application/json'
+                },
+                body: JSON.stringify({ guess: { word: gameBoard[rowNumber].map( a => a.char).join('')}})
+            })
+            .then( res => {
+                if(res.ok){
+                    res.json()
+                    .then(data => {
+                        console.log(data)
+                        const copy = [...gameBoard]
+                        copy[rowNumber] = data.result
+
+                        setGameBoard(copy)
+
+                        if(data.game_status === 'won'){
+                            console.log('won')
+                            //update state
+                            setUser({...user, stats: {...user.stats, games_played: user.stats.games_played + 1, games_won: user.stats.games_won + 1}})
+                            setDisplayMessage({display: true, message: 'You Win!'})
+                            setTimeout(()=>{
+                                toggleStatistics()
+                            }, 3000)
+                        }else if(data.game_status === 'lost'){
+                            setDisplayMessage({display: true, message: 'You Lose'})
+                            setUser({...user, stats: {...user.stats, games_played: user.stats.games_played + 1}})
+                            setTimeout(()=>{
+                                toggleStatistics()
+                            }, 3000)
+
+                        }
+
+                        if( rowNumber < 5){
+                            const nextRow = document.getElementById(rowNumber+1)
+                            nextRow.firstChild.focus()
+                            updateRowNumber()                    
+                        }
+
+                        
+                        
+
+                    })
+                }else{ res.json().then(error => {
+                    console.log(error.errors)
+                    setDisplayMessage({display: true, message: error.errors.word[0]})
+                    setTimeout(()=>{
+                        setDisplayMessage({...displayMessage, display: false})
+                    },3000)
+                })}
+            })            
+        }
+
        
     }
 
     return ( 
 
         <form onSubmit={submitAttempt} className='min-h-[95svh] bg-white grid gap-2 place-content-center relative'>
-            { renderRows}
+            
+            <div className={`absolute top-[20%] w-full ${!displayMessage?.display && 'hidden'}`}>
+                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{displayMessage.message}</p>
+            </div>
+            
+            { renderRows }
 
             <button className='border border-black py-5 bg-black text-white'>Enter</button>
         </form> 

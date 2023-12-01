@@ -26,7 +26,7 @@ function Header({ toggleStatistics}) {
     return ( 
     <div className='header'>
         
-        <p className={`logo ${ !user.loggedIn && 'mx-auto'}`}>Wordle Clone</p>
+        <button onClick={()=>navigate('/')} className={`logo ${ !user.loggedIn && 'mx-auto'}`}>Wordle Clone</button>
 
         <div className={`${ user.loggedIn ? 'flex' : 'hidden'} headerBtnContainer`}>
 
