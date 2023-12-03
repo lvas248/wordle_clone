@@ -19,6 +19,8 @@ function Game({toggleStatistics}) {
         [{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false }],
     ])
 
+    const [ rowNumber, setRowNumber ] = useState(0)
+
     useEffect(()=>{
         fetch('/game', {
             method: 'POST',
@@ -40,8 +42,11 @@ function Game({toggleStatistics}) {
     // eslint-disable-next-line 
     },[])
 
+    useEffect(()=>{
+        const nextRow = document.getElementById(rowNumber)
+        nextRow.firstChild.focus()
+    }, [rowNumber])
 
-    const [ rowNumber, setRowNumber ] = useState(0)
 
     function updateRowNumber(){
         rowNumber < 5 && setRowNumber(rowNumber+1)
@@ -120,15 +125,8 @@ function Game({toggleStatistics}) {
 
                         }
 
-                        if( rowNumber < 5){
-                            const nextRow = document.getElementById(rowNumber+1)
-                            nextRow.firstChild.focus()
-                            updateRowNumber()                    
-                        }
-
+                        if( rowNumber < 5) updateRowNumber()                    
                         
-                        
-
                     })
                 }else{ res.json().then(error => {
                     console.log(error.errors)
