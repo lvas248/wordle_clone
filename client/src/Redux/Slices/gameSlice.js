@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { updateStatsForWin, updateStatsForLoss } from "./statSlice";
 
 export const submitGuess = createAsyncThunk(
     'submit/post',
-    async( obj, { rejectWithValue })=>{
+    async( obj, { dispatch, rejectWithValue })=>{
         const response = await fetch('/guess',{
             method:'POST',
             headers: {
@@ -14,6 +15,8 @@ export const submitGuess = createAsyncThunk(
         const data = await response.json()
 
         if(response.ok){
+            if( data.game_progress === 'win' ) dispatch(updateStatsForWin())
+            else if(data.game_progess === 'lost') dispatch(updateStatsForLoss())
 
             return data
         }

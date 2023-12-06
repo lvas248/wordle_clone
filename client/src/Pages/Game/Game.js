@@ -5,7 +5,6 @@ import WinnerPage from './StatisticsPage'
 import Row from './Row'
 
 function Game({toggleStatistics}) {
-
     const dispatch = useDispatch()
     const game = useSelector(state => state.game.entity)   
     const gameBoard = game?.game_board
@@ -21,6 +20,16 @@ function Game({toggleStatistics}) {
             nextRow?.firstChild?.focus()            
         }
     }, [rowNumber])
+
+    useEffect(()=>{
+        if(game?.progress !== 'pending'){
+            setTimeout(()=>{
+                toggleStatistics()
+            }, 3000)
+            
+        } 
+    },[game?.progress])
+
 
     function updateGameBoard(e){
 
@@ -78,12 +87,12 @@ function Game({toggleStatistics}) {
                 <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{error?.errors?.word[0]}</p>
             </div>
 
-            <div className={`absolute top-[20%] w-full ${game?.status?.status !== 'won' && 'hidden'}`}>
-                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{game?.status?.word}</p>
+            <div className={`absolute top-[20%] w-full ${game?.progress !== 'won' && 'hidden'}`}>
+                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{game?.word}</p>
             </div>
 
-            <div className={`absolute top-[20%] w-full ${game?.status?.status !== 'lost' && 'hidden'}`}>
-                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{game?.status?.word}</p>
+            <div className={`absolute top-[20%] w-full ${game?.progress !== 'lost' && 'hidden'}`}>
+                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{game?.word}</p>
             </div>
             
             { renderRows }
