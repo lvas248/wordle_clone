@@ -1,18 +1,21 @@
-import { useContext, useState } from 'react'
-import { UserContext } from '../App'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { loginuser } from '../Redux/Slices/sessionSlice'
 
 function Login() {
+    
+    const dispatch = useDispatch()    
+    const navigate = useNavigate()
 
+    const errors = useSelector( state => state.session.error)
+    // const isLoading = useSelector( state => state.session.status)
 
-    const [ ,setUser ] = useContext(UserContext)
     const [ loginObj, setLoginObj ] = useState({
         email: '',
         password: ''
     })
-    const [ errors, setErrors ] = useState({})
 
-    const navigate = useNavigate()
 
     
     function updateLoginObj(e){
@@ -23,24 +26,10 @@ function Login() {
 
     function submitLogin(e){
         e.preventDefault()
-        fetch('/login',{
-            method: 'POST',
-            headers: {
-                'Content-type':'application/json'
-            },
-            body: JSON.stringify({user: loginObj})
-        }).then( res => {
-            if(res.ok){
-                res.json()
-                .then(data => {
-                    setUser({...data, loggedIn: true})
-                    navigate('/')
-                })
-            }else{
-                res.json()
-                .then(data => setErrors(data))
-            }
+        dispatch(loginuser(loginObj)).then(res => {
+            if(res.meta.requestStatus === 'fulfilled') navigate('/')
         })
+
     }
     return ( 
 
@@ -53,7 +42,7 @@ function Login() {
 
                 <div className='flex justify-between'>
                     <p className='inputLabel'>Email Address</p>
-                    <p className={errors.error ? 'error' : 'hidden' }>{errors.error}</p>
+                    {/* <p className={errors?.error ? 'error' : 'hidden' }>{errors?.error}</p> */}
                 </div>
 
                 <input name='email' value={loginObj.email} onChange={updateLoginObj} type='email' className='formInput' />
@@ -65,7 +54,7 @@ function Login() {
 
                 <div className='flex justify-between'>
                     <p className='inputLabel'>Password</p>
-                    <p className={errors.password ? 'error' : 'hidden' }>{errors.password}</p>
+                    {/* <p className={errors.password ? 'error' : 'hidden' }>{errors.password}</p> */}
                 </div>
 
                 <input name='password' value={loginObj.password} onChange={updateLoginObj} type='password' className='formInput' />

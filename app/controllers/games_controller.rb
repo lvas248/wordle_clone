@@ -12,6 +12,14 @@ class GamesController < ApplicationController
         end
     end
 
+    def show
+        user = get_user
+        game = user.games.find_by(status: 'pending')
+        render json: game, status: :ok
+    end
+
+    
+
 
 
     private

@@ -1,18 +1,18 @@
 import { useNavigate } from 'react-router-dom'
-import { useContext } from 'react'
-import { UserContext } from '../../App'
+import { useSelector } from 'react-redux'
 
 function StatisticsPage({display, toggleDisplay}) {
 
-    const [ user, ] = useContext(UserContext)
     const navigate = useNavigate()
+    const stats = useSelector(state => state.stat.entity)
+
 
     function navigateHome(){
         navigate('/')
         toggleDisplay()
     }
 
-    const winPercentage = Math.round(user?.stats?.games_won / user?.stats?.games_played * 100)
+    const winPercentage = Math.round(stats?.games_won / stats?.games_played * 100)
 
     return ( 
         <div className={`${display ? 'grid' : 'hidden' } bg-white text-black absolute top-0 h-[100svh] w-[100vw] grid place-content-center z-50`}>
@@ -27,7 +27,7 @@ function StatisticsPage({display, toggleDisplay}) {
                     
                     <div className='flex justify-between'>
                         <div className='statContainer'>
-                            <p className='stat'>{user?.stats?.games_played}</p>
+                            <p className='stat'>{stats?.games_played}</p>
                             <p>Played</p>
                         </div>
 
@@ -37,12 +37,12 @@ function StatisticsPage({display, toggleDisplay}) {
                         </div>
 
                         <div className='statContainer'>
-                            <p className='stat'>{user?.stats?.current_streak}</p>
+                            <p className='stat'>{stats?.current_streak}</p>
                             <p>Streak</p>
                         </div>
 
                         <div className='statContainer'>
-                            <p className='stat'>{user?.stats?.best_streak}</p>
+                            <p className='stat'>{stats?.best_streak}</p>
                             <p>Max</p>
                             <p>Streak</p>
                         </div>

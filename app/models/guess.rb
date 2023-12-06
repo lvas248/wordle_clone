@@ -27,12 +27,15 @@ class Guess < ApplicationRecord
   end 
 
   def update_game_status
+
       if(self.character_checks.all? { |c| c.correct == true })
         self.game.update(status: 'won')
         self.game.update(attempts: self.game.guesses.count)
+        
       elsif (self.game.guesses.count > 5)
         self.game.update(status: 'lost')
       end
+
   end
 
  

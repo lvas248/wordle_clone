@@ -1,34 +1,31 @@
-import { useContext } from 'react'
-import { UserContext } from'../App'
 import { useNavigate } from 'react-router-dom'
 import howTo from '../Assets/Icons/icons8-question-100.png'
 import stats from '../Assets/Icons/icons8-bar-graph-100.png'
 import settings from '../Assets/Icons/icons8-settings-100.png'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutSession } from '../Redux/Slices/sessionSlice'
 
 
 function Header({ toggleStatistics}) {
 
-    const [ user, setUser ] = useContext(UserContext)
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const loggedIn = useSelector( state => state.session.loggedIn)
+
     function logout(){
-        fetch('/logout',{
-          method: 'DELETE'
-        }).then(res => {
-            if(res.ok){ 
-                setUser({loggedIn: false})
-                navigate('/')
-            }} 
-                
-          )
+        dispatch(logoutSession())
+        .then(res => {
+            if(res.meta.requestStatus === 'fulfilled') navigate('/')
+        })
       }
 
     return ( 
     <div className='header'>
         
-        <button onClick={()=>navigate('/')} className={`logo ${ !user.loggedIn && 'mx-auto'}`}>Wordle Clone</button>
+        <button onClick={()=>navigate('/')} className={`logo ${ !loggedIn && 'mx-auto'}`}>Wordle Clone</button>
 
-        <div className={`${ user.loggedIn ? 'flex' : 'hidden'} headerBtnContainer`}>
+        <div className={`${ loggedIn ? 'flex' : 'hidden'} headerBtnContainer`}>
 
             <button> <img  className='headerIcon' alt='text' src={howTo} /> </button>
             <button onClick={toggleStatistics}> <img className='headerIcon' alt='text' src={stats} /> </button>

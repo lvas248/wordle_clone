@@ -27,7 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_161005) do
 
   create_table "games", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "word_id", null: false
+    t.bigint "word_id"
     t.integer "attempts", default: 0
     t.string "status", default: "pending"
     t.datetime "created_at", null: false

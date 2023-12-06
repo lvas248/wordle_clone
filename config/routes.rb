@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   post '/game', to: 'games#create'
+  get '/game', to: 'games#show'
+  
   post '/guess', to: 'guesses#create'
   
 end

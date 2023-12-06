@@ -2,7 +2,6 @@ function Row({i, handleKeyDown, rowNumber, updateGameBoard, gameBoard}) {
    
     const renderInputs = []
 
-
    
     for(let n=0; n<5; n++){
         renderInputs.push(<input key={n} id={`${i}${n}`} name={n} onKeyDown={handleKeyDown} onChange={updateGameBoard} value={gameBoard && gameBoard[i][n]?.char}  

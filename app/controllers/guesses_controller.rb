@@ -3,7 +3,7 @@ class GuessesController < ApplicationController
     def create
         user = get_user
         game = user.games.find_by(status: 'pending')
-        # word = Word.find_by(guess_params)
+        # binding.pry
         result = game.guesses.create!(guess_params)
         render json: result, status: :created
     end

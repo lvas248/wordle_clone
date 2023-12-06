@@ -1,63 +1,32 @@
 import { useState, useEffect } from 'react'
-import { useContext } from 'react'
-import { UserContext } from '../../App'
+import { useSelector, useDispatch } from 'react-redux'
+import { clearGameError, submitGuess, updateChar } from '../../Redux/Slices/gameSlice'
 import WinnerPage from './StatisticsPage'
 import Row from './Row'
 
 function Game({toggleStatistics}) {
 
-    const [ user, setUser ] = useContext(UserContext)
+    const dispatch = useDispatch()
+    const game = useSelector(state => state.game.entity)   
+    const gameBoard = game?.game_board
+    const rowNumber = game?.attempt 
+    const error = useSelector(state => state.game.error)
+    
+    const [ displayMessage, setDisplayMessage ] = useState({ display: false, message: '' })
 
-    const [ displayMessage, setDisplayMessage ] = useState({ display: false, message: ''})
-
-    const [ gameBoard, setGameBoard ] = useState([
-        [{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false }],
-        [{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false }],
-        [{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false }],
-        [{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false }],
-        [{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false }],
-        [{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false },{ char: '', correct: false, exists: false }],
-    ])
-
-    const [ rowNumber, setRowNumber ] = useState(0)
-
-    useEffect(()=>{
-        fetch('/game', {
-            method: 'POST',
-        }).then(res =>  {
-            if(res.ok){
-                res.json()
-                .then(data => {
-                    const copy = [...gameBoard]
-                    data.guesses.forEach( g => copy[data.guesses.indexOf(g)] = g.result )
-                    setGameBoard(copy)
-                    setRowNumber(data.guesses.length)
-                    const current = document.getElementById(data.guesses.length)
-                    current.firstChild.focus()
-                   
-                })
-
-            }
-        })
-    // eslint-disable-next-line 
-    },[])
-
-    useEffect(()=>{
-        const nextRow = document.getElementById(rowNumber)
-        nextRow.firstChild.focus()
+    useEffect(()=>{        
+        if(game.progress === 'pending'){
+            console.log('yes')
+            const nextRow = document.getElementById(rowNumber)
+            nextRow?.firstChild?.focus()            
+        }
     }, [rowNumber])
 
-
-    function updateRowNumber(){
-        rowNumber < 5 && setRowNumber(rowNumber+1)
-    }
-
     function updateGameBoard(e){
-        if(/^[a-zA-z]$/.test(e.target.value)){
 
-            const copy = [...gameBoard]
-            copy[rowNumber][e.target.name].char = e.target.value
-            setGameBoard(copy)
+        if(/^[a-zA-z]$/.test(e.target.value)){
+            dispatch(updateChar({ index: e.target.name, char: e.target.value }))
+
             if(parseInt(e.target.name) < 4){
                 const current = document.getElementById(e.target.id)
                 current.nextSibling.focus()                 
@@ -70,9 +39,7 @@ function Game({toggleStatistics}) {
     function handleKeyDown(e){
 
         if(e.key === 'Backspace'){
-            const copy = [...gameBoard]
-            copy[rowNumber][e.target.name].char = ''
-            setGameBoard(copy)
+            dispatch(updateChar({ index: e.target.name, char: ''}))
 
             if(parseInt(e.target.name) > 0){
                 const current = document.getElementById(e.target.id)
@@ -87,66 +54,36 @@ function Game({toggleStatistics}) {
         renderRows.push(<Row key={i} i={i} rowNumber={rowNumber} handleKeyDown={handleKeyDown} updateGameBoard={updateGameBoard} gameBoard={gameBoard} />)
     }
 
+
     function submitAttempt(e){
-
         e.preventDefault()
-        if(rowNumber < 6){
-            fetch('/guess',{
-                method: 'POST',
-                headers: {
-                    'Content-type':'application/json'
-                },
-                body: JSON.stringify({ guess: { word: gameBoard[rowNumber].map( a => a.char).join('')}})
-            })
-            .then( res => {
-                if(res.ok){
-                    res.json()
-                    .then(data => {
-                        console.log(data)
-                        const copy = [...gameBoard]
-                        copy[rowNumber] = data.result
 
-                        setGameBoard(copy)
-
-                        if(data.game_status === 'won'){
-                            console.log('won')
-                            //update state
-                            setUser({...user, stats: {...user.stats, games_played: user.stats.games_played + 1, games_won: user.stats.games_won + 1}})
-                            setDisplayMessage({display: true, message: 'You Win!'})
-                            setTimeout(()=>{
-                                toggleStatistics()
-                            }, 3000)
-                        }else if(data.game_status === 'lost'){
-                            setDisplayMessage({display: true, message: 'You Lose'})
-                            setUser({...user, stats: {...user.stats, games_played: user.stats.games_played + 1}})
-                            setTimeout(()=>{
-                                toggleStatistics()
-                            }, 3000)
-
-                        }
-
-                        if( rowNumber < 5) updateRowNumber()                    
-                        
-                    })
-                }else{ res.json().then(error => {
-                    console.log(error.errors)
-                    setDisplayMessage({display: true, message: error.errors.word[0]})
-                    setTimeout(()=>{
-                        setDisplayMessage({...displayMessage, display: false})
-                    },3000)
-                })}
-            })            
-        }
-
-       
+        if(rowNumber < 6) dispatch(submitGuess(gameBoard[rowNumber].map( a => a.char).join(''))).then(res => {
+            
+            if(res.meta.requestStatus === 'fulfilled'){ 
+            }else{
+                setTimeout(()=>{
+                    console.log('clear error')
+                    dispatch(clearGameError())
+                }, 3000)
+            }
+        })         
     }
 
     return ( 
 
         <form onSubmit={submitAttempt} className='min-h-[95svh] bg-white grid gap-2 place-content-center relative'>
-            
-            <div className={`absolute top-[20%] w-full ${!displayMessage?.display && 'hidden'}`}>
-                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{displayMessage.message}</p>
+
+            <div className={`absolute top-[20%] w-full ${(!error?.errors) && 'hidden'}`}>
+                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{error?.errors?.word[0]}</p>
+            </div>
+
+            <div className={`absolute top-[20%] w-full ${game?.status?.status !== 'won' && 'hidden'}`}>
+                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{game?.status?.word}</p>
+            </div>
+
+            <div className={`absolute top-[20%] w-full ${game?.status?.status !== 'lost' && 'hidden'}`}>
+                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{game?.status?.word}</p>
             </div>
             
             { renderRows }
