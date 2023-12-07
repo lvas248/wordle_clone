@@ -80,13 +80,13 @@ export const refreshSession = createAsyncThunk(
         const data = await response.json()
 
         if(response.ok){ 
+            console.log(data)
             const { email, username, stats, open_game } = data
             dispatch(addUser({email, username }))
             dispatch(addStats(stats))
-            dispatch(addGame(open_game))
+            if(open_game) dispatch(addGame(open_game))
 
-            // add game
-            return data
+            return 
         }
         return rejectWithValue(data)
     }
@@ -131,7 +131,7 @@ const sessionSlice = createSlice({
                 state.loggedIn = true
             })
 
-            .addCase( loginuser.pending, state => {
+            .addCase( loginuser.pending, ( state ) => {
                 state.loggedIn = false
                 state.status = 'pending'
                 state.error = null
@@ -141,34 +141,34 @@ const sessionSlice = createSlice({
                 state.status = 'idle'
                 state.error = action.payload
             })
-            .addCase( loginuser.fulfilled, state => {
+            .addCase( loginuser.fulfilled, ( state ) => {
                 state.loggedIn = true
                 state.status = 'idle'
                 state.error = null
             })
-            .addCase( refreshSession.pending, state => {
+            .addCase( refreshSession.pending, ( state ) => {
                 state.loggedIn = false
                 state.status = 'pending'
                 state.error = null
             })
-            .addCase( refreshSession.rejected, (state) => {
+            .addCase( refreshSession.rejected, ( state ) => {
                 state.loggedIn = false
                 state.status = 'idle'
             })
-            .addCase( refreshSession.fulfilled, state => {
+            .addCase( refreshSession.fulfilled, ( state ) => {
                 state.loggedIn = true
                 state.status = 'idle'
                 state.error = null
             })
-            .addCase( logoutSession.pending, state => {
+            .addCase( logoutSession.pending, ( state ) => {
                 state.status = 'pending'
                 state.error = null
             })
-            .addCase( logoutSession.rejected, (state,action) => {
+            .addCase( logoutSession.rejected, ( state, action ) => {
                 state.status = 'idle'
                 state.error = action.payload
             })
-            .addCase( logoutSession.fulfilled, state => {
+            .addCase( logoutSession.fulfilled, ( state ) => {
                 state.loggedIn = false
                 state.status = 'idle'
                 state.error = null

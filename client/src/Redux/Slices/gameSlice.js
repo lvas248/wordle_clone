@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { updateGamesPlayed, updateGamesWon, updateStats } from "./statSlice";
+import { updateGamesPlayed, updateGamesWon, updateStats, updateGuessDistribution } from "./statSlice";
 
 export const submitGuess = createAsyncThunk(
     'submit/post',

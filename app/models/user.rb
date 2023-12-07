@@ -9,8 +9,8 @@ class User < ApplicationRecord
 
 
 
-    def get_or_create_open_game
-        self.games.find_by(status: 'pending') || self.games.create!(word: Word.all.sample)
-    end
+    # def get_or_create_open_game
+    #     self.games.find_by(status: 'pending') || self.games.create!(word: Word.all.sample)
+    # end
 
 end

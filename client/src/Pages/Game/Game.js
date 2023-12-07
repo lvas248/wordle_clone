@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { clearGameError, submitGuess, updateChar, clearGameBoard } from '../../Redux/Slices/gameSlice'
-import WinnerPage from './StatisticsPage'
+import { updateGuessDistribution } from '../../Redux/Slices/statSlice'
 import Row from './Row'
 
 function Game({toggleStatistics}) {
@@ -11,11 +11,9 @@ function Game({toggleStatistics}) {
     const rowNumber = game?.attempt 
     const error = useSelector(state => state.game.error)
     
-    const [ displayMessage, setDisplayMessage ] = useState({ display: false, message: '' })
 
     useEffect(()=>{        
         if(game.progress === 'pending'){
-            console.log('yes')
             const nextRow = document.getElementById(rowNumber)
             nextRow?.firstChild?.focus()            
         }
@@ -23,6 +21,7 @@ function Game({toggleStatistics}) {
 
     useEffect(()=>{
         if(game?.progress !== 'pending'){
+            if( game?.progress === 'won') dispatch(updateGuessDistribution(rowNumber))
             setTimeout(()=>{
                 toggleStatistics()
                 dispatch(clearGameBoard())
@@ -33,7 +32,7 @@ function Game({toggleStatistics}) {
 
 
     function updateGameBoard(e){
-
+        console.log(e.target.value)
         if(/^[a-zA-z]$/.test(e.target.value)){
             dispatch(updateChar({ index: e.target.name, char: e.target.value }))
 

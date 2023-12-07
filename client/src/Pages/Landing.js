@@ -10,7 +10,7 @@ function Landing() {
     const isLoading = useSelector( state => state.status)
     const navigate = useNavigate()
 
-
+    console.log(loggedIn)
 
     return ( 
         <div className='landing'>

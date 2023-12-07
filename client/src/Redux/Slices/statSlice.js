@@ -30,11 +30,15 @@ const statSlice = createSlice({
         updateStats: ( state ) =>{
             debugger
             state.entity.games_played++
+        },
+        updateGuessDistribution: ( state, action ) =>{
+            state.entity.guess_distribution[action.payload]++
+            
         }
     
     }
 })
 
-export const { addStats, removeStats, updateGamesWon, updateGamesPlayed, updateStats } = statSlice.actions
+export const { addStats, removeStats, updateGamesWon, updateGamesPlayed, updateStats, updateGuessDistribution } = statSlice.actions
 export default statSlice.reducer;
 

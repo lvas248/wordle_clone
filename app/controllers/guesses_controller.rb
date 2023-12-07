@@ -2,7 +2,7 @@ class GuessesController < ApplicationController
 
     def create
         user = get_user
-        game = user.games.find_by(status: 'pending')
+        game = user.games.find_by(status: 'pending') || user.games.create!(word: Word.all.sample)
         # binding.pry
         result = game.guesses.create!(guess_params)
         render json: result, status: :created

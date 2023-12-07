@@ -3,11 +3,14 @@ class UserSerializer < ActiveModel::Serializer
 
 
   def open_game
-    game = self.object.get_or_create_open_game
-    {
-      status: game.status,
-      game_board: game.guesses.map{ |g| g.character_checks.map{ |c| { char: c.char, correct: c.correct, exists: c.exists}} }
-    }
+    game = self.object.games.find_by_status('pending')
+    # game = self.object.get_or_create_open_game
+    if game
+      return {
+        status: game.status,
+        game_board: game.guesses.map{ |g| g.character_checks.map{ |c| { char: c.char, correct: c.correct, exists: c.exists}} }
+      }
+    end
   end
 
   def stats

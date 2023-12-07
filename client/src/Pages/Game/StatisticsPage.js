@@ -4,15 +4,19 @@ import { useSelector } from 'react-redux'
 function StatisticsPage({display, toggleDisplay}) {
 
     const navigate = useNavigate()
-    const stats = useSelector(state => state.stat.entity)
-
+    const { games_played, games_won, guess_distribution, current_streak, best_streak } = useSelector(state => state.stat.entity)
 
     function navigateHome(){
         navigate('/')
         toggleDisplay()
     }
 
-    const winPercentage = Math.round(stats?.games_won / stats?.games_played * 100)
+    const winPercentage = Math.round(games_won / games_played * 100)
+
+    const renderGuessStat = guess_distribution.map( (g, index) =>{
+        const w = Math.round(( g / games_won ) * 100)
+        return <div key={index} className={`flex gap-4`}> <p className='text-center'>{index + 1}</p> <div className={` ${g > 0 && `bg-black text-white w-[${w}%]`} text-center `}>{g}</div> </div>
+    })
 
     return ( 
         <div className={`${display ? 'grid' : 'hidden' } bg-white text-black absolute top-0 h-[100svh] w-[100vw] grid place-content-center z-50`}>
@@ -27,7 +31,7 @@ function StatisticsPage({display, toggleDisplay}) {
                     
                     <div className='flex justify-between'>
                         <div className='statContainer'>
-                            <p className='stat'>{stats?.games_played}</p>
+                            <p className='stat'>{games_played}</p>
                             <p>Played</p>
                         </div>
 
@@ -37,12 +41,12 @@ function StatisticsPage({display, toggleDisplay}) {
                         </div>
 
                         <div className='statContainer'>
-                            <p className='stat'>{stats?.current_streak}</p>
+                            <p className='stat'>{current_streak}</p>
                             <p>Streak</p>
                         </div>
 
                         <div className='statContainer'>
-                            <p className='stat'>{stats?.best_streak}</p>
+                            <p className='stat'>{best_streak}</p>
                             <p>Max</p>
                             <p>Streak</p>
                         </div>
@@ -53,7 +57,10 @@ function StatisticsPage({display, toggleDisplay}) {
 
                 <div>
                     <p className='uppercase text-[14px] font-bold'>guess distribution</p>
-                    <div>
+                    
+                    <div className='grid gap-1'>
+
+                        {renderGuessStat}
 
                     </div>
 
