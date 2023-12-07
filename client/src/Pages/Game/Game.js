@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { clearGameError, submitGuess, updateChar } from '../../Redux/Slices/gameSlice'
+import { clearGameError, submitGuess, updateChar, clearGameBoard } from '../../Redux/Slices/gameSlice'
 import WinnerPage from './StatisticsPage'
 import Row from './Row'
 
@@ -25,8 +25,9 @@ function Game({toggleStatistics}) {
         if(game?.progress !== 'pending'){
             setTimeout(()=>{
                 toggleStatistics()
+                dispatch(clearGameBoard())
             }, 3000)
-            
+
         } 
     },[game?.progress])
 

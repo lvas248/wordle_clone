@@ -21,11 +21,13 @@ const statSlice = createSlice({
         removeStats: ( state ) =>{
             state.entity = initialState
         }, 
-        updateStatsForWin: ( state ) => {
-            state.entity.games_played++
+        updateGamesWon: ( state ) => {
             state.entity.games_won++
         },
-        updateStatsForLoss: ( state ) =>{
+        updateGamesPlayed: ( state ) =>{
+            state.entity.games_played++
+        },
+        updateStats: ( state ) =>{
             debugger
             state.entity.games_played++
         }
@@ -33,6 +35,6 @@ const statSlice = createSlice({
     }
 })
 
-export const { addStats, removeStats, updateStatsForWin, updateStatsForLoss } = statSlice.actions
+export const { addStats, removeStats, updateGamesWon, updateGamesPlayed, updateStats } = statSlice.actions
 export default statSlice.reducer;
 

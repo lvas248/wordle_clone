@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { updateStatsForWin, updateStatsForLoss } from "./statSlice";
+import { updateGamesPlayed, updateGamesWon, updateStats } from "./statSlice";
 
 export const submitGuess = createAsyncThunk(
     'submit/post',
@@ -15,9 +15,16 @@ export const submitGuess = createAsyncThunk(
         const data = await response.json()
 
         if(response.ok){
-            if( data.game_progress === 'win' ) dispatch(updateStatsForWin())
-            else if(data.game_progess === 'lost') dispatch(updateStatsForLoss())
 
+
+            if(data.game_progress === 'lost'){ 
+                dispatch(updateGamesPlayed())
+            }
+            else if( data.game_progress === 'won' ){ 
+                dispatch(updateGamesWon())
+                dispatch(updateGamesPlayed())
+                
+            }
             return data
         }
         
@@ -60,6 +67,9 @@ const gameSlice = createSlice({
             const row = state.entity.attempt 
             state.entity.game_board[row][action.payload.index].char = action.payload.char
         },
+        clearGameBoard: ( state ) => {
+            state.entity = initialState.entity
+        },
         clearGameError: ( state ) => {
             state.error = null
         }
@@ -84,6 +94,6 @@ const gameSlice = createSlice({
     }
 })
 
-export const { addGame, removeGame, updateChar, clearGameError } = gameSlice.actions
+export const { addGame, removeGame, updateChar, clearGameError, clearGameBoard } = gameSlice.actions
 export default gameSlice.reducer
 
