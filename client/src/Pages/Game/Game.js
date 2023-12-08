@@ -107,7 +107,7 @@ function Game({toggleStatistics}) {
 
             </div>
 
-            <Keyboard handleKeyDown={handleKeyDown} gameBoard={gameBoard} />
+            <Keyboard handleKeyDown={handleKeyDown} gameBoard={gameBoard} row={row} />
 
 
 
