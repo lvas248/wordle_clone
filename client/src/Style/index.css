@@ -9,6 +9,9 @@
     @apply bg-[#e3e3e1] min-h-[100svh]
   }
 
+  .tile{
+    @apply h-[62px] w-[62px] border border-slate-400 shadow text-[32px] font-bold text-center uppercase grid place-content-center
+  }
   /* nav */
   .mediumDropDown{
     @apply static pr-[3svw] w-fit pt-0 flex-row gap-5 border-none divide-none 

@@ -4,8 +4,8 @@ import { updateChar, submitGuess, clearGameError, clearGameBoard } from "../../R
 import { updateGuessDistribution } from "../../Redux/Slices/statSlice";
 import { useState } from 'react'
 import Row from "./Row";
+function Game2({toggleStatistics}){
 
-function Game({toggleStatistics}) {
     const dispatch = useDispatch()
     const game = useSelector(state => state.game.entity)
     const gameBoard = game?.game_board
@@ -35,23 +35,33 @@ function Game({toggleStatistics}) {
    
     function handleKeyDown(e){
 
+        console.log(e.key)
+
         if(/^[a-zA-z]$/.test(e.key)){
             if( col < 5 ){ 
                 dispatch(updateChar({index: col, char: e.key}))
                 if(col < 4) setCol(col + 1)    
             }
         }
+
+
         else if( e.key === 'Backspace' ){
             console.log(gameBoard[row][col])
             if( col > 0){ 
                 if(gameBoard[row][col].char !== ''){
                     dispatch(updateChar({index: col, char: ''}))
+                //    setCol(col - 1) 
                 }else{
+                    console.log('asd')
                     dispatch(updateChar({index: col-1, char: ''}))
                     setCol(col - 1)  
                 }
+                
             }
         }
+
+
+       
     }
 
     function handleSubmit(){
@@ -66,6 +76,7 @@ function Game({toggleStatistics}) {
                     setCol(0)        
                 }else{
                     setTimeout(()=>{
+                        console.log('clear error')
                         dispatch(clearGameError())
                     }, 3000)
                 }
@@ -76,6 +87,23 @@ function Game({toggleStatistics}) {
     const renderRows = gameBoard.map( (r, index) => {
         return <Row key={index} i={index} gameBoard={gameBoard} tile={tile} row={row} />
     })
+
+  
+
+    // function submitAttempt(e){
+    //     e.preventDefault()
+
+    //     if(rowNumber < 6) dispatch(submitGuess(gameBoard[rowNumber].map( a => a.char).join(''))).then(res => {
+            
+    //         if(res.meta.requestStatus === 'fulfilled'){ 
+    //         }else{
+    //             setTimeout(()=>{
+    //                 console.log('clear error')
+    //                 dispatch(clearGameError())
+    //             }, 3000)
+    //         }
+    //     })         
+    // }
 
     return ( 
 
@@ -108,4 +136,4 @@ function Game({toggleStatistics}) {
      );
 }
 
-export default Game;
+export default Game2;

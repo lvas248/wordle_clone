@@ -1,18 +1,21 @@
-function Row({i, handleKeyDown, rowNumber, updateGameBoard, gameBoard}) {
+function Row({i, gameBoard, tile, row}) {
    
     const renderInputs = []
 
-   
     for(let n=0; n<5; n++){
-        renderInputs.push(<input key={n} id={`${i}${n}`} name={n} onKeyDown={handleKeyDown} onChange={updateGameBoard} value={gameBoard && gameBoard[i][n]?.char}  
-        className={`
-            gameInput 
-            ${ rowNumber === i && 'border-2 border-black' } 
-            ${ gameBoard[i][n]?.correct && 'bg-[#6aa964] text-white' }  
-            ${ (gameBoard[i][n]?.exists && !gameBoard[i][n]?.correct) && 'bg-[#c9b458] text-white'} 
-            
-            `} 
-            tabIndex='1' disabled={ rowNumber !== i && true}/>
+
+        const { char, correct, exists } = gameBoard[i][n]
+
+        const bgColor = correct ? '#6aa964' : ( exists ? '#c9b458' : '#787c7e' )
+        renderInputs.push( 
+            <div key={n} id={i.toString()+ n.toString()} 
+                className={
+                    `                    
+                    tile 
+                    ${ i < row && `bg-[${bgColor}] text-white border-none`}
+                    `} >
+                    {char}
+            </div>
         )
     }
     
