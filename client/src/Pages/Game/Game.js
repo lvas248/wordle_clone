@@ -95,6 +95,11 @@ function Game({toggleStatistics}) {
 
 
             <div className='grid place-content-center gap-2' onKeyDown={handleKeyDown} tabIndex={0}>
+
+                {/* <div className='flex'>
+                    <div className='tile bg-slate-500 animate-flip'></div>
+                    <div className='tile bg-slate-500 animate-flip' style={{ animationDelay: '0.01s' }}></div>
+                </div> */}
                 
                 { renderRows }
 
