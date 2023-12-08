@@ -4,6 +4,7 @@ import { updateChar, submitGuess, clearGameError, clearGameBoard } from "../../R
 import { updateGuessDistribution } from "../../Redux/Slices/statSlice";
 import { useState } from 'react'
 import Row from "./Row";
+import Keyboard from "./Keyboard";
 
 function Game({toggleStatistics}) {
     const dispatch = useDispatch()
@@ -34,14 +35,16 @@ function Game({toggleStatistics}) {
     const tile = row.toString()+col.toString()
    
     function handleKeyDown(e){
+        
+        const c = e.key || e
 
-        if(/^[a-zA-z]$/.test(e.key)){
+        if(/^[a-zA-z]$/.test(c)){
             if( col < 5 ){ 
-                dispatch(updateChar({index: col, char: e.key}))
+                dispatch(updateChar({index: col, char: c.toLowerCase() }))
                 if(col < 4) setCol(col + 1)    
             }
         }
-        else if( e.key === 'Backspace' ){
+        else if( c === 'Backspace' ){
             if( col > 0){ 
                 if(gameBoard[row][col].char !== ''){
                     dispatch(updateChar({index: col, char: ''}))
@@ -51,7 +54,7 @@ function Game({toggleStatistics}) {
                 }
             }
         }        
-        else if( e.key === 'Enter' ){
+        else if( c === 'Enter' ){
             handleSubmit()
         }
     }
@@ -80,17 +83,17 @@ function Game({toggleStatistics}) {
 
     return ( 
 
-        <div className='h-[92svh] grid place-content-center' onKeyDown={handleKeyDown} tabIndex={0}>
+        <div className='h-[92svh] grid place-content-center bg-[#ffffff]' onKeyDown={handleKeyDown} tabIndex={0}>
             
-            <div className={`absolute top-[20%] w-full ${(!error?.errors) && 'hidden'}`}>
+            <div className={`absolute top-[10%] w-full ${(!error?.errors) && 'hidden'}`}>
                 <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto '>{error?.errors?.word[0]}</p>
             </div>
 
-            <div className={`absolute top-[20%] w-full ${game?.progress !== 'won' && 'hidden'}`}>
+            <div className={`absolute top-[10%] w-full ${game?.progress !== 'won' && 'hidden'}`}>
                 <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto '>{game?.word}</p>
             </div>
 
-            <div className={`absolute top-[20%] w-full ${game?.progress !== 'lost' && 'hidden'}`}>
+            <div className={`absolute top-[10%] w-full ${game?.progress !== 'lost' && 'hidden'}`}>
                 <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto'>{game?.word}</p>
             </div>
 
@@ -103,6 +106,8 @@ function Game({toggleStatistics}) {
                 {/* <button className='bg-black text-white h-[60px] w-full' onClick={handleSubmit}> enter </button> */}
 
             </div>
+
+            <Keyboard handleKeyDown={handleKeyDown} gameBoard={gameBoard} />
 
 
 

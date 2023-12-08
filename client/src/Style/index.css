@@ -104,6 +104,11 @@
     @apply border-2 border-black
   }
 
+  .keyBoardBtn{
+    @apply  h-[58px] w-[43px] text-[20px] shadow rounded-md bg-[#d3d6da] font-semibold
+  }
+
+
   /* Stats */
   .stat{
     @apply text-[44px] font-medium font-sans
