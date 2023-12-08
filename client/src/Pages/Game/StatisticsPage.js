@@ -11,12 +11,19 @@ function StatisticsPage({display, toggleDisplay}) {
         toggleDisplay()
     }
 
+    function getWidth(g){
+        console.log(`w-[${Math.round( g / games_won * 100 )}%]`)
+        return `w-[${Math.round( g / games_won * 100 )}%]`
+    }
+
     const winPercentage = Math.round(games_won / games_played * 100)
 
     const renderGuessStat = guess_distribution.map( (g, index) =>{
-        const w = Math.round(( g / games_won ) * 100)
-        return <div key={index} className={`flex gap-4`}> <p className='text-center'>{index + 1}</p> <div className={` ${g > 0 && `bg-black text-white w-[${w}%]`} text-center `}>{g}</div> </div>
+
+        return <div key={index} className={`flex gap-4`}> <p className='text-center'>{index + 1}</p> <div className={` ${g > 0 && `bg-black text-white ${getWidth(g)}`} text-center `}>{g}</div> </div>
+    
     })
+
 
     return ( 
         <div className={`${display ? 'grid' : 'hidden' } bg-white text-black absolute top-0 h-[100svh] w-[100vw] grid place-content-center z-50`}>

@@ -7,15 +7,14 @@ import Row from "./Row";
 import Keyboard from "./Keyboard";
 
 function Game({toggleStatistics}) {
+
     const dispatch = useDispatch()
     const game = useSelector(state => state.game.entity)
     const gameBoard = game?.game_board
     const error = useSelector(state => state.game.error)
 
-
     const [ col, setCol ] = useState(0)
     const [ row, setRow ] = useState(0)
-
 
     useEffect(()=>{ 
         setRow(game?.attempt)
@@ -38,13 +37,13 @@ function Game({toggleStatistics}) {
         
         const c = e.key || e
 
-        if(/^[a-zA-z]$/.test(c)){
-            if( col < 5 ){ 
-                dispatch(updateChar({index: col, char: c.toLowerCase() }))
-                if(col < 4) setCol(col + 1)    
-            }
+        if(/^[a-zA-z]$/.test(c) && col < 5){
+            dispatch(updateChar({index: col, char: c.toLowerCase() }))
+            if(col < 4) setCol(col + 1)    
+
         }
         else if( c === 'Backspace' ){
+
             if( col > 0){ 
                 if(gameBoard[row][col].char !== ''){
                     dispatch(updateChar({index: col, char: ''}))
@@ -54,6 +53,7 @@ function Game({toggleStatistics}) {
                 }
             }
         }        
+
         else if( c === 'Enter' ){
             handleSubmit()
         }
@@ -78,7 +78,7 @@ function Game({toggleStatistics}) {
     }
 
     const renderRows = gameBoard.map( (r, index) => {
-        return <Row key={index} i={index} gameBoard={gameBoard} tile={tile} row={row} error={error} />
+        return <Row key={index} i={index} gameBoard={gameBoard} row={row} error={error} />
     })
 
     return ( 
@@ -99,17 +99,12 @@ function Game({toggleStatistics}) {
 
 
             <div className='grid place-content-center gap-2' tabIndex={0}>
-
-                
+            
                 { renderRows }
-
-                {/* <button className='bg-black text-white h-[60px] w-full' onClick={handleSubmit}> enter </button> */}
 
             </div>
 
             <Keyboard handleKeyDown={handleKeyDown} gameBoard={gameBoard} row={row} />
-
-
 
         </div>
      );
