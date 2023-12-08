@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { addUser, removeUser } from './userSlice'
 import { addStats, removeStats } from "./statSlice";
-import { addGame } from './gameSlice'
+import { addGame, removeGame } from './gameSlice'
 //create signup async
 export const signupUser = createAsyncThunk(
     'signup/user',
@@ -44,7 +44,7 @@ export const loginuser = createAsyncThunk(
             const { email, username, stats, open_game } = data
             dispatch(addUser({email, username }))
             dispatch(addStats(stats))
-            dispatch(addGame(open_game))
+            if(open_game) dispatch(addGame(open_game))
 
             return data
         }
@@ -65,6 +65,7 @@ export const logoutSession = createAsyncThunk(
             
             dispatch(removeStats())
             dispatch(removeUser())
+            dispatch(removeGame())
             return
         }
         return rejectWithValue(data)

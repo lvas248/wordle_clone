@@ -18,7 +18,7 @@ function StatisticsPage({display, toggleDisplay}) {
 
     const winPercentage = Math.round(games_won / games_played * 100)
 
-    const renderGuessStat = guess_distribution.map( (g, index) =>{
+    const renderGuessStat = guess_distribution?.map( (g, index) =>{
 
         return <div key={index} className={`flex gap-4`}> <p className='text-center'>{index + 1}</p> <div className={` ${g > 0 && `bg-black text-white ${getWidth(g)}`} text-center `}>{g}</div> </div>
     
