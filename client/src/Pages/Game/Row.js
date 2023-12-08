@@ -2,8 +2,6 @@ function Row({i, gameBoard, tile, row, error}) {
    
     const renderInputs = []
 
-
-    console.log(tile)
     for(let n=0; n<5; n++){
 
         const { char, correct, exists } = gameBoard[i][n]

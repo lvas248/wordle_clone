@@ -3,7 +3,7 @@ class Guess < ApplicationRecord
   
   has_many :character_checks, dependent: :destroy
 
-  validates :word, presence: true, length: { is: 5 }
+  validates :word, presence: true, length: { is: 5, message: 'Not enough letters' }
   validate :is_word?
 
   after_create :check_characters
@@ -22,7 +22,7 @@ class Guess < ApplicationRecord
 
   def is_word?
     unless Word.find_by(word: self.word)
-      errors.add(:word, 'Not a word')
+      errors.add(:word, 'Not in word list')
     end
   end 
 

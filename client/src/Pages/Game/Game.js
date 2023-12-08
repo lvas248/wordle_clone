@@ -42,7 +42,6 @@ function Game({toggleStatistics}) {
             }
         }
         else if( e.key === 'Backspace' ){
-            console.log(gameBoard[row][col])
             if( col > 0){ 
                 if(gameBoard[row][col].char !== ''){
                     dispatch(updateChar({index: col, char: ''}))
@@ -51,17 +50,19 @@ function Game({toggleStatistics}) {
                     setCol(col - 1)  
                 }
             }
+        }        
+        else if( e.key === 'Enter' ){
+            handleSubmit()
         }
     }
 
     function handleSubmit(){
 
-        if(row < 7 && col === 4){ 
+        if(row < 7){ 
 
             dispatch(submitGuess(gameBoard[row].map( a => a.char).join(''))).then(res => {
             
                 if(res.meta.requestStatus === 'fulfilled'){
-                    console.log('ok')
                     setRow(row+1)
                     setCol(0)        
                 }else{
@@ -82,24 +83,24 @@ function Game({toggleStatistics}) {
         <div className='h-[92svh] grid place-content-center' onKeyDown={handleKeyDown} tabIndex={0}>
             
             <div className={`absolute top-[20%] w-full ${(!error?.errors) && 'hidden'}`}>
-                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{error?.errors?.word[0]}</p>
+                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto '>{error?.errors?.word[0]}</p>
             </div>
 
             <div className={`absolute top-[20%] w-full ${game?.progress !== 'won' && 'hidden'}`}>
-                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{game?.word}</p>
+                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto '>{game?.word}</p>
             </div>
 
             <div className={`absolute top-[20%] w-full ${game?.progress !== 'lost' && 'hidden'}`}>
-                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto animate-bounce'>{game?.word}</p>
+                <p className='bg-black text-white w-fit px-4 py-2 rounded-md mx-auto'>{game?.word}</p>
             </div>
 
 
-            <div className='grid place-content-center gap-2' onKeyDown={handleKeyDown} tabIndex={0}>
+            <div className='grid place-content-center gap-2' tabIndex={0}>
 
                 
                 { renderRows }
 
-                <button className='bg-black text-white h-[60px] w-full' onClick={handleSubmit}> enter </button>
+                {/* <button className='bg-black text-white h-[60px] w-full' onClick={handleSubmit}> enter </button> */}
 
             </div>
 
