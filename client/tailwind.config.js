@@ -6,6 +6,19 @@ module.exports = {
   theme: {
     extend: {
       keyframes: {
+        vibrate:{
+          '0%': { transform: 'translateX(0)' },
+          '10%': { transform: 'translateX(2%)' },
+          '20%': { transform: 'translateX(0)' },
+          '30%': { transform: 'translateX(-2%)' },
+          '40%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(2%)' },
+          '60%': { transform: 'translateX(0)' },
+          '70%': { transform: 'translateX(2%)' },
+          '80%': { transform: 'translateX(0)' },
+          '90%': { transform: 'translateX(-2%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
         flip: {
           '0%': { transform: 'rotateX(180deg)', backfaceVisibility: 'visible' },
           '100%': { transform: 'rotateX(0)' }
@@ -17,7 +30,8 @@ module.exports = {
       },
       animation: {
         'glide-up': 'glideUp 800ms ease-out',
-        'flip': 'flip 0.5s ease-in-out'
+        'flip': 'flip 0.5s ease-in-out',
+        'vibrate': 'vibrate 0.4s ease-in'
       }
     },
   },
