@@ -27,6 +27,7 @@ function Signup(){
         e.preventDefault()
         dispatch(signupUser(signupObj))
         .then(res => {
+            console.log(res)
             if(res.meta.requestStatus === 'fulfilled') navigate('/')
         })
 

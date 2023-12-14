@@ -31,7 +31,7 @@ function Game({toggleStatistics}) {
         } 
     },[game?.progress])
 
-    const tile = row.toString()+col.toString()
+    // const tile = row.toString()+col.toString()
    
     function handleKeyDown(e){
         
@@ -77,7 +77,7 @@ function Game({toggleStatistics}) {
         }
     }
 
-    const renderRows = gameBoard.map( (r, index) => {
+    const renderRows = gameBoard?.map( (r, index) => {
         return <Row key={index} i={index} gameBoard={gameBoard} row={row} error={error} />
     })
 

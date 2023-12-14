@@ -3,7 +3,7 @@ import { updateGamesPlayed, updateGamesWon, updateStats, updateGuessDistribution
 
 export const submitGuess = createAsyncThunk(
     'submit/post',
-    async( obj, { dispatch, rejectWithValue })=>{
+    async( obj, { getState, dispatch, rejectWithValue })=>{
         const response = await fetch('/guess',{
             method:'POST',
             headers: {
@@ -13,19 +13,26 @@ export const submitGuess = createAsyncThunk(
         })
 
         const data = await response.json()
+        const state = getState()
 
         if(response.ok){
 
+            
 
-            if(data.game_progress === 'lost'){ 
-                dispatch(updateGamesPlayed())
-            }
-            else if( data.game_progress === 'won' ){ 
-                dispatch(updateGamesWon())
-                dispatch(updateGamesPlayed())
+            if( data.game_progress === 'won' ){ 
+                    dispatch(updateGamesWon())
+                    dispatch(updateGamesPlayed()) 
+
+                    console.log('data: ',data)   
+                    console.log('state: ',state.stat)            
+                }
+            else if(data.game_progress === 'lost') {
+                    dispatch(updateGamesPlayed())
+                }
                 
-            }
+
             return data
+
         }
         
         return rejectWithValue(data)

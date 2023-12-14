@@ -18,4 +18,5 @@ class GuessSerializer < ActiveModel::Serializer
 
 
 
+
 end

@@ -1,34 +1,32 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :username, :email, :stats, :open_game
 
+  attributes :username, :open_game, :leaderboard, :games_won, :games_played, :guess_distribution, :current_streak, :best_streak, :guess_average
 
   def open_game
-    game = self.object.games.find_by_status('pending')
-    # game = self.object.get_or_create_open_game
-    if game
-      return {
-        status: game.status,
-        game_board: game.guesses.map{ |g| g.character_checks.map{ |c| { char: c.char, correct: c.correct, exists: c.exists}} }
-      }
-    end
+    self.object.get_open_game
   end
 
-  def stats
-      { 
-        games_played: self.object.games.where.not(status: 'pending').count, 
-        games_won: self.object.games.where(status: 'won').count,
-        current_streak: 0,
-        best_streak: 0,
-        guess_distribution:     [
-          self.object.games.where(attempts: 1).count ,
-          self.object.games.where(attempts: 2).count,
-          self.object.games.where(attempts: 3).count,
-          self.object.games.where(attempts: 4).count,
-          self.object.games.where(attempts: 5).count,
-          self.object.games.where(attempts: 6).count,
-        ]
-      }
+  def leaderboard
+    User.top_users.map{ |u| { games_won: u.get_games_won, games_played: u.get_games_played, username: u.username, guess_average: u.guess_average,}}
   end
+
+  def games_won
+    self.object.get_games_won
+  end
+
+  def games_played
+    self.object.get_games_played
+  end
+
+  def guess_distribution
+    self.object.guess_distribution
+  end
+
+
+
+  
+
+ 
 
 
 

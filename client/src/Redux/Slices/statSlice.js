@@ -8,7 +8,6 @@ const initialState = {
         games_won: 0,
         guess_distribution: []        
     }
-
 }
 
 const statSlice = createSlice({
@@ -25,10 +24,9 @@ const statSlice = createSlice({
             state.entity.games_won++
         },
         updateGamesPlayed: ( state ) =>{
-            state.entity.games_played++
+            state.entity.games_played += 1
         },
         updateStats: ( state ) =>{
-            debugger
             state.entity.games_played++
         },
         updateGuessDistribution: ( state, action ) =>{

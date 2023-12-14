@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { addUser, removeUser } from './userSlice'
 import { addStats, removeStats } from "./statSlice";
 import { addGame, removeGame } from './gameSlice'
+import { addLeaderboard } from "./leaderboardSlice";
+
 //create signup async
 export const signupUser = createAsyncThunk(
     'signup/user',
@@ -16,11 +18,13 @@ export const signupUser = createAsyncThunk(
         const data = await response.json()
 
         if(response.ok){
-            const { email, username, stats, open_game } = data
+            const { email, username, open_game, leaderboard, games_won, games_played, guess_distribution, current_streak, best_streak, guess_average } = data
 
-            dispatch(addUser({email, username, stats }))
-            dispatch(addStats(stats))
-            dispatch(addGame(open_game))
+            dispatch(addUser({email, username }))
+            dispatch(addStats({ games_won, games_played, guess_distribution, current_streak, best_streak, guess_average, guess_distribution}))
+            dispatch(addLeaderboard(leaderboard))
+
+            if(open_game) dispatch(addGame(open_game))
             return data
         }
         return rejectWithValue(data)
@@ -41,9 +45,11 @@ export const loginuser = createAsyncThunk(
         const data = await response.json()
 
         if(response.ok){
-            const { email, username, stats, open_game } = data
+            const { email, username, open_game, leaderboard, games_won, games_played, guess_distribution, current_streak, best_streak, guess_average } = data
+
+            dispatch(addStats({ games_won, games_played, guess_distribution, current_streak, best_streak, guess_average, guess_distribution}))
             dispatch(addUser({email, username }))
-            dispatch(addStats(stats))
+            dispatch(addLeaderboard(leaderboard))
             if(open_game) dispatch(addGame(open_game))
 
             return data
@@ -81,10 +87,12 @@ export const refreshSession = createAsyncThunk(
         const data = await response.json()
 
         if(response.ok){ 
-            console.log(data)
-            const { email, username, stats, open_game } = data
+            const { email, username, open_game, leaderboard, games_won, games_played, guess_distribution, current_streak, best_streak, guess_average } = data
+
+            dispatch(addStats({ games_won, games_played, guess_distribution, current_streak, best_streak, guess_average, guess_distribution}))
             dispatch(addUser({email, username }))
-            dispatch(addStats(stats))
+            dispatch(addLeaderboard(leaderboard))
+
             if(open_game) dispatch(addGame(open_game))
 
             return 

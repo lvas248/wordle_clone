@@ -10,8 +10,6 @@ function Landing() {
     const isLoading = useSelector( state => state.status)
     const navigate = useNavigate()
 
-    console.log(loggedIn)
-
     return ( 
         <div className='landing'>
 
@@ -22,9 +20,10 @@ function Landing() {
             </div>
 
             <div className='landingBtns'>                       
-                <button onClick={()=>navigate('/play')} className='landingbuttons bg-black text-white'>{isLoading ? <img className='loading' alt='loading' src={loadingIcon} /> : 'Play' }</button>
+                <button onClick={()=>navigate('/play')} className={`landingbuttons bg-black text-white ${!loggedIn && 'hidden'}`}>{isLoading ? <img className='loading' alt='loading' src={loadingIcon} /> : 'Play' }</button>
+                <button onClick={()=>navigate('/signup')} className={`landingbuttons  ${loggedIn && 'hidden'}`}>Sign up</button>
                 <button onClick={()=>navigate('/login')} className={`landingbuttons  ${loggedIn && 'hidden'}`}>Log in</button>
-                <button onClick={()=>navigate('/how-to')} className='landingbuttons'> How to Play</button>
+                <button onClick={()=>navigate('/how-to')} className={`landingbuttons ${!loggedIn && 'hidden'}`}> How to Play</button>
             </div>
 
         </div> 

@@ -12,7 +12,6 @@ function StatisticsPage({display, toggleDisplay}) {
     }
 
     function getWidth(g){
-        console.log(`w-[${Math.round( g / games_won * 100 )}%]`)
         return `w-[${Math.round( g / games_won * 100 )}%]`
     }
 

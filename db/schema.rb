@@ -49,6 +49,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_161005) do
     t.string "username"
     t.string "email"
     t.string "password_digest"
+    t.float "guess_average", default: 0.0
+    t.integer "current_streak", default: 0
+    t.integer "best_streak", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
