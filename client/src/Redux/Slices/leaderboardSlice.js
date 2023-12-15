@@ -12,22 +12,6 @@ const leaderboardSlice = createSlice({
         addLeaderboard: ( state, action ) =>{
             state.entity = action.payload
         },
-        updateLeaderboard: ( state, action ) =>{
-
-            // check to see if user is in leader board
-            // const position = state.entity.indexOf( s => s.username === action.payload.username)
-            // //if yes, update user record then reorganize
-            // if(position){
-            //     state.entity[position].games_played++
-            //     action.payload.status === 'won' && state.entity[position].games_won++
-            // }
-            // else{
-                
-            // }
-            //if no, add user to leaderboard, reorganize, set top ten to state
-
-         
-        },
         sortByGamesWon: ( state, action ) =>{
             state.entity.sort( (a,b)=> b.games_won - a.games_won )
         },
@@ -37,7 +21,7 @@ const leaderboardSlice = createSlice({
             } )
         },
         sortByAvgGuesses: ( state ) => {
-            state.entity.sort( (a,b) => calculateAverage(a.guess_distribution) - calculateAverage(b.guess_distribution))
+            state.entity.sort( (a,b) => b.guess_average - a.guess_average)
             
         }
 

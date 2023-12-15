@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { calculateAverage } from '../Helpers/calculateAverage'
 import { sortByGamesWon, sortByWinPercentage, sortByAvgGuesses } from '../Redux/Slices/leaderboardSlice'
 
 function LeaderBoard({display, toggleDisplay}){
