@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { updateStatsAfterWin, updateStatsAfterLoss } from "./statSlice";
+import { updateLeaderBoard } from './leaderboardSlice'
 
 export const submitGuess = createAsyncThunk(
     'submit/post',
@@ -14,15 +15,16 @@ export const submitGuess = createAsyncThunk(
 
         const data = await response.json()
         const state = getState()
-        //state.game.attempt + 1
 
         if(response.ok){
 
             if( data.game_progress === 'won' ){ 
                 dispatch(updateStatsAfterWin(state.game.entity.attempt))
+                dispatch(updateLeaderBoard({...getState().stat.entity, username: getState().user.entity.username }))
             }
             else if(data.game_progress === 'lost') {
-                    dispatch(updateStatsAfterLoss())
+                dispatch(updateStatsAfterLoss())
+                dispatch(updateLeaderBoard({...getState().stat.entity, username: getState().user.entity.username }))
             }
                 
             return data

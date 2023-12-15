@@ -38,6 +38,11 @@ function StatisticsPage({display, toggleDisplay}) {
                     <div className='flex flex-col  justify-between'>
 
                         <div className='statContainer '>
+                            <p className='stat'>{games_won}</p>
+                            <p>Wins</p>
+                        </div>
+
+                        <div className='statContainer '>
                             <p className='stat'>{games_played}</p>
                             <p>Games Played</p>
                         </div>
