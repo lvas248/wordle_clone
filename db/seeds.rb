@@ -2319,4 +2319,7 @@ words = [
 
 words.each { |w| Word.create!(word: w) }
 
-User.create!(email: 'lvas248@gmail.com', username: 'lvas248', password: '123', password_confirmation: '123')
+User.create!(email: 'lvas248@gmail.com', username: 'luis', password: '123', password_confirmation: '123')
+User.create!(email: 'chimi@gmail.com', username: 'chimi', password: '123', password_confirmation: '123')
+User.create!(email: 'sasha@gmail.com', username: 'sasha', password: '123', password_confirmation: '123')
+User.create!(email: 'viv@gmail.com', username: 'vivi', password: '123', password_confirmation: '123')

@@ -62,7 +62,7 @@ const gameSlice = createSlice({
             state.entity.attempt = action.payload.game_board.length 
         },
         removeGame: ( state ) =>{
-            state.entity = initialState
+            state.entity = initialState.entity
         },
         updateChar: ( state, action ) =>{
             const row = state.entity.attempt 

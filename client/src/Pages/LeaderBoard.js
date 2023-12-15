@@ -27,13 +27,13 @@ function LeaderBoard({display, toggleDisplay}){
 
     return ( 
         
-        <div className={`${display ? 'grid' : 'hidden' } bg-white text-black absolute top-0 h-[100svh] w-[100vw] grid place-content-center z-50`}>
+        <div className={`${display ? 'grid' : 'hidden' } bg-white text-black absolute top-0 h-[100svh] w-[100vw] grid place-content-center z-50 px-10`}>
             
             <p className='font-bold text-xl my-6'>LeaderBoard</p>
 
             <div className='divide-y divide-slate-200 border-b'>
                 
-                <div className='grid grid-cols-5 gap-8 text-center text-sm border p-2 bg-slate-200' >
+                <div className='grid grid-cols-5 gap-8 items-center text-center text-sm border p-2 bg-slate-200' >
                     <p>Rank</p>
                     <p>User</p>
                     <button onClick={(e)=>dispatch(sortByGamesWon())} className='underline underline-offset-2'>Games Won</button>

@@ -1,6 +1,6 @@
 class Game < ApplicationRecord
 
-  before_update :update_user_stats
+  after_update :update_user_stats
 
   belongs_to :user
   belongs_to :word
@@ -17,7 +17,7 @@ class Game < ApplicationRecord
 
 
     if self.status == 'won'
-
+      
       self.user.update_user_stats_after_win
     
     elsif self.status == 'lost'
