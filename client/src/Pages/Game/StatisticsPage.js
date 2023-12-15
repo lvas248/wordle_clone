@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 function StatisticsPage({display, toggleDisplay}) {
 
     const navigate = useNavigate()
-    const { games_played, games_won, guess_distribution, current_streak, best_streak } = useSelector(state => state.stat.entity)
+    const { games_played, games_won, guess_distribution, current_streak, best_streak, guess_average } = useSelector(state => state.stat.entity)
 
     function navigateHome(){
         navigate('/')
@@ -29,16 +29,17 @@ function StatisticsPage({display, toggleDisplay}) {
             
             <button onClick={navigateHome} className='px-5 h-fit w-fit ml-auto rounded-2xl mb-4 '>X</button>
 
-            <div className='bg-white h-[50svh] w-[35vw] max-w-[343px] min-w-[300px] flex flex-col gap-4 '>
+            <div className='bg-white h-[50svh] w-[35vw] max-w-[343px] min-w-[300px] flex flex-col gap-10 '>
                 
-                <div>
+                <div className='flex flex-col gap-5'>
 
-                    <p className='uppercase text-[14px] font-bold'>statistics</p>
+                    <p className='uppercase text-[20px] font-bold'>statistics</p>
                     
-                    <div className='flex justify-between'>
-                        <div className='statContainer'>
+                    <div className='flex flex-col  justify-between'>
+
+                        <div className='statContainer '>
                             <p className='stat'>{games_played}</p>
-                            <p>Played</p>
+                            <p>Games Played</p>
                         </div>
 
                         <div className='statContainer'>
@@ -48,21 +49,28 @@ function StatisticsPage({display, toggleDisplay}) {
 
                         <div className='statContainer'>
                             <p className='stat'>{current_streak}</p>
-                            <p>Streak</p>
+                            <p>Current Streak</p>
                         </div>
 
                         <div className='statContainer'>
                             <p className='stat'>{best_streak}</p>
-                            <p>Max</p>
-                            <p>Streak</p>
+                            <p>Best Streak</p>
                         </div>
+
+                        <div className='statContainer'>
+                            <p className='stat'>{guess_average}</p>
+                            <p>Guess Avg (wins)</p>
+                        </div>
+
+                    
                     
                     </div>
 
                 </div>
 
-                <div>
-                    <p className='uppercase text-[14px] font-bold'>guess distribution</p>
+                <div className='flex flex-col gap-5'>
+
+                    <p className='uppercase text-[20px] font-bold'>guess distribution</p>
                     
                     <div className='grid gap-1'>
 

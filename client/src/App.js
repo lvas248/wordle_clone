@@ -33,6 +33,8 @@ function App() {
     dispatch(refreshSession())
   },[])
 
+  const { guess_average, guess_distribution } = useSelector( state => state.stat.entity)
+
   return (
 
 

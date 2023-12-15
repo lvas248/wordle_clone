@@ -38,7 +38,7 @@ function LeaderBoard({display, toggleDisplay}){
                     <p>User</p>
                     <button onClick={(e)=>dispatch(sortByGamesWon())} className='underline underline-offset-2'>Games Won</button>
                     <button onClick={()=>dispatch(sortByWinPercentage())} className='underline underline-offset-2'>Win %</button>
-                    <button onClick={()=>dispatch(sortByAvgGuesses())} className='underline underline-offset-2'>Avg Guesses</button>
+                    <button onClick={()=>dispatch(sortByAvgGuesses())} className='underline underline-offset-2'>Guess Avg (wins)</button>
                 </div>
 
                 {renderUserStats}

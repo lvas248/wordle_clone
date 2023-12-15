@@ -38,20 +38,22 @@ class User < ApplicationRecord
 
     def calculate_guess_average
        
-        total = self.guess_distribution.each_with_index.reduce(0) do | acc, (val, index) | 
-            acc + ( val * ( index + 1) ) 
+        total_guesses_of_games_won = self.guess_distribution.each_with_index.reduce(0) do | acc, (val, index) | 
+            acc + ( val * ( index + 1) )
         end
 
-        sum = self.guess_distribution.reduce { |acc, val| acc + val  }
+        games_won = self.guess_distribution.reduce { |acc, val| acc + val }
         
-        avg = (total.to_f / sum ).round(1)
+
+
+        avg = ((total_guesses_of_games_won.to_f + 1) / games_won.to_f ).round(1)
       
     end
 
     def update_user_stats_after_win
         updated_current_streak = self.current_streak + 1
         updated_best_streak = updated_current_streak > self.best_streak ? updated_current_streak : self.best_streak
-        self.update!( guess_average: get_guess_average, current_streak: updated_current_streak, best_streak: updated_best_streak )
+        self.update!( guess_average: calculate_guess_average, current_streak: updated_current_streak, best_streak: updated_best_streak )
     end
 
     def update_user_stats_after_loss

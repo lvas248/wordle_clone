@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateChar, submitGuess, clearGameError, clearGameBoard } from "../../Redux/Slices/gameSlice";
-import { updateGuessDistribution } from "../../Redux/Slices/statSlice";
 import { useState } from 'react'
 import Row from "./Row";
 import Keyboard from "./Keyboard";
@@ -22,16 +21,13 @@ function Game({toggleStatistics}) {
 
     useEffect(()=>{
         if(game?.progress !== 'pending'){
-            if( game?.progress === 'won') dispatch(updateGuessDistribution(row))
             setTimeout(()=>{
                 toggleStatistics()
                 dispatch(clearGameBoard())
             }, 3000)
-
         } 
     },[game?.progress])
 
-    // const tile = row.toString()+col.toString()
    
     function handleKeyDown(e){
         

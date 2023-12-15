@@ -33,11 +33,5 @@ class Guess < ApplicationRecord
 
 
   end
-
- 
-
- 
-
-
   
 end

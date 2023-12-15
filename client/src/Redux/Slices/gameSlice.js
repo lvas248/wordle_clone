@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { updateGamesPlayed, updateGamesWon, updateStats, updateGuessDistribution } from "./statSlice";
+import { updateStatsAfterWin, updateStatsAfterLoss } from "./statSlice";
 
 export const submitGuess = createAsyncThunk(
     'submit/post',
@@ -14,23 +14,17 @@ export const submitGuess = createAsyncThunk(
 
         const data = await response.json()
         const state = getState()
+        //state.game.attempt + 1
 
         if(response.ok){
 
-            
-
             if( data.game_progress === 'won' ){ 
-                    dispatch(updateGamesWon())
-                    dispatch(updateGamesPlayed()) 
-
-                    console.log('data: ',data)   
-                    console.log('state: ',state.stat)            
-                }
+                dispatch(updateStatsAfterWin(state.game.entity.attempt))
+            }
             else if(data.game_progress === 'lost') {
-                    dispatch(updateGamesPlayed())
-                }
+                    dispatch(updateStatsAfterLoss())
+            }
                 
-
             return data
 
         }

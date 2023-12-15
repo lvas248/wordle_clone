@@ -111,10 +111,10 @@
 
   /* Stats */
   .stat{
-    @apply text-[44px] font-medium font-sans
+    @apply text-[20px] font-medium font-sans
   }
   .statContainer{
-    @apply flex flex-col text-center text-[12px] font-light
+    @apply flex flex-row-reverse items-center justify-between text-center text-[15px] font-bold
   }
 
 
