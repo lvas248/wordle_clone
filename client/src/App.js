@@ -11,7 +11,7 @@ import Header from './Layout/Header';
 import Game from './Pages/Game/Game';
 import LeaderBoard from './Pages/LeaderBoard';
 import StatisticsPage from './Pages/Game/StatisticsPage';
-
+import HowTo from './Pages/Game/HowTo';
 
 function App() {
 
@@ -55,6 +55,9 @@ function App() {
           <Route path='/signup' element={<Signup />}/>
 
           <Route path='/home' element={<Home />} />
+
+          <Route path='/how-to' element={<HowTo />} />
+
 
           <Route exact path='/' element={<Landing />} />
 

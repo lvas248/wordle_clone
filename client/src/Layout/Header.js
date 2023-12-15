@@ -20,7 +20,7 @@ function Header({ toggleStatistics, toggleLeaderBoard}) {
         .then(res => {
             if(res.meta.requestStatus === 'fulfilled') navigate('/')
         })
-      }
+    }
 
     return ( 
     <div className='header'>
@@ -29,7 +29,7 @@ function Header({ toggleStatistics, toggleLeaderBoard}) {
 
         <div className={`${ loggedIn ? 'flex' : 'hidden'} headerBtnContainer`}>
 
-            <button> <img  className='headerIcon' alt='text' src={howTo} /> </button>
+            <button onClick={()=>navigate('/how-to')}> <img  className='headerIcon' alt='text' src={howTo} /> </button>
             <button onClick={toggleStatistics}> <img className='headerIcon' alt='text' src={stats} /> </button>
             <button onClick={toggleLeaderBoard}>  <img className='headerIcon' alt='text' src={leaderBoard} /> </button>
             <button> <img className='headerIcon' alt='text' src={settings} /> </button>

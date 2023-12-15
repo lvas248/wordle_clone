@@ -117,5 +117,11 @@
     @apply flex flex-row-reverse items-center justify-between text-center text-[15px] font-bold
   }
 
+  /* HowTo */
+
+  .howToTile{
+    @apply  h-[33px] w-[33px] text-[25px] border border-slate-800 grid place-content-center font-bold bg-white
+  }
+
 
 }
