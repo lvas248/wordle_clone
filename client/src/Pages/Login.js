@@ -2,22 +2,20 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { loginuser } from '../Redux/Slices/sessionSlice'
-
+import { clearSessionErrors } from '../Redux/Slices/sessionSlice'
 function Login() {
     
     const dispatch = useDispatch()    
     const navigate = useNavigate()
 
-    const errors = useSelector( state => state.session.error)
-    // const isLoading = useSelector( state => state.session.status)
+    const error = useSelector( state => state.session.error)
+
 
     const [ loginObj, setLoginObj ] = useState({
         email: '',
         password: ''
     })
 
-
-    
     function updateLoginObj(e){
         const copy = {...loginObj}
         copy[e.target.name] = e.target.value
@@ -27,8 +25,12 @@ function Login() {
     function submitLogin(e){
         e.preventDefault()
         dispatch(loginuser(loginObj)).then(res => {
-            console.log(res)
             if(res.meta.requestStatus === 'fulfilled') navigate('/')
+            else{ 
+            setTimeout( ()=>{
+                dispatch(clearSessionErrors())
+            }, 3000)
+        }
         })
 
     }
@@ -43,7 +45,7 @@ function Login() {
 
                 <div className='flex justify-between'>
                     <p className='inputLabel'>Email Address</p>
-                    {/* <p className={errors?.error ? 'error' : 'hidden' }>{errors?.error}</p> */}
+                    <p className={error?.error ? 'error' : 'hidden' }>{error?.error}</p>
                 </div>
 
                 <input name='email' value={loginObj.email} onChange={updateLoginObj} type='email' className='formInput' />

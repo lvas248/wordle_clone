@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { signupUser } from '../Redux/Slices/sessionSlice'
+import { clearSessionErrors } from '../Redux/Slices/sessionSlice'
 
 function Signup(){
 
@@ -27,8 +28,14 @@ function Signup(){
         e.preventDefault()
         dispatch(signupUser(signupObj))
         .then(res => {
-            console.log(res)
+
             if(res.meta.requestStatus === 'fulfilled') navigate('/')
+            else{
+                setTimeout( ()=>{
+                    dispatch(clearSessionErrors())
+                }, 3000)
+    
+            }
         })
 
     }
@@ -44,7 +51,7 @@ function Signup(){
 
                 <div className='flex justify-between'>
                     <p className='inputLabel'>Email Address</p>
-                    {/* <p className={errors.username ? 'error' : 'hidden' }>{errors.username}</p> */}
+                    <p className={errors?.email ? 'error' : 'hidden' }>{errors?.email}</p>
                 </div>
 
                 <input name='email' value={signupObj.email} onChange={updateSignupObj} type='email' className='formInput' />
@@ -56,7 +63,7 @@ function Signup(){
 
                 <div className='flex justify-between'>
                     <p className='inputLabel'>Username</p>
-                    {/* <p className={errors.username ? 'error' : 'hidden' }>{errors.username}</p> */}
+                    <p className={errors?.username ? 'error' : 'hidden' }>{errors?.username}</p>
                 </div>
 
                 <input name='username' value={signupObj.username} onChange={updateSignupObj} className='formInput' />
@@ -68,7 +75,7 @@ function Signup(){
 
                 <div className='flex justify-between'>
                     <p className='inputLabel'>Password</p>
-                    {/* <p className={errors.password ? 'error' : 'hidden' }>{errors.password}</p> */}
+                    <p className={errors?.password ? 'error' : 'hidden' }>{errors?.password}</p>
                 </div>
 
                 <input name='password' value={signupObj.password} onChange={updateSignupObj} type='password' className='formInput' />
@@ -80,7 +87,7 @@ function Signup(){
 
                 <div className='flex justify-between'>
                     <p className='inputLabel'>Confirm Pasword</p>
-                    {/* <p className={errors.password_confirmation ? 'error' : 'hidden' }>{errors.password_confirmation}</p> */}
+                    <p className={errors?.password_confirmation ? 'error' : 'hidden' }>{errors?.password_confirmation}</p>
                 </div>
 
                 <input name='password_confirmation' value={signupObj.password_confirmation} type='password' onChange={updateSignupObj} className='formInput' />
