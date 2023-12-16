@@ -23,18 +23,14 @@ function StatisticsPage({display, toggleDisplay}) {
     
     })
 
-
     return ( 
-        <div className={`${display ? 'grid' : 'hidden' } bg-white text-black absolute top-0 h-[100svh] w-[100vw] grid place-content-center z-50`}>
-            
-            <button onClick={navigateHome} className='px-5 h-fit w-fit ml-auto rounded-2xl mb-4 '>X</button>
 
-            <div className='bg-white h-[50svh] w-[35vw] max-w-[343px] min-w-[300px] flex flex-col gap-10 '>
-                
-                <div className='flex flex-col gap-5'>
+            <div className={`${display ? 'grid' : 'hidden' } popupContainer`}>
 
-                    <p className='uppercase text-[20px] font-bold'>statistics</p>
-                    
+                <div className='popupContent'>
+
+                    <h1 className='text-[28px] font-bold'>User Statistics</h1>
+
                     <div className='flex flex-col  justify-between'>
 
                         <div className='statContainer '>
@@ -67,31 +63,26 @@ function StatisticsPage({display, toggleDisplay}) {
                             <p>Guess Avg (wins)</p>
                         </div>
 
-                    
-                    
+                        <div className='flex flex-col gap-2'>
+
+                            <p className='text-[20px]'>Guess Distribution:</p>
+                            
+                            <div className='grid gap-1 pl-4'>
+
+                                {renderGuessStat}
+
+                            </div>
+
+                        </div>
+                        
                     </div>
+
+                    <button onClick={toggleDisplay} className='bg-black text-white uppercase rounded-md font-bold h-[5svh] w-full max-w-[500px] mx-auto'>back</button>
 
                 </div>
 
-                <div className='flex flex-col gap-5'>
+            </div>             
 
-                    <p className='uppercase text-[20px] font-bold'>guess distribution</p>
-                    
-                    <div className='grid gap-1'>
-
-                        {renderGuessStat}
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            
-
-
-        </div> 
     );
 }
 

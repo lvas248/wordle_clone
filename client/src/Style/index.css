@@ -114,13 +114,23 @@
     @apply text-[20px] font-medium font-sans
   }
   .statContainer{
-    @apply flex flex-row-reverse items-center justify-between text-center text-[15px] font-bold
+    @apply flex flex-row-reverse items-center justify-between text-center text-[20px]
   }
 
   /* HowTo */
 
   .howToTile{
     @apply  h-[33px] w-[33px] text-[25px] border border-slate-800 grid place-content-center font-bold bg-white
+  }
+
+  /* Popup Pages */
+
+  .popupContainer{
+    @apply fixed w-full h-full grid place-content-center 
+  }
+
+  .popupContent{
+    @apply w-[520px] p-10 mx-auto bg-white rounded-lg shadow-2xl grid gap-4 animate-glide-up-alt
   }
 
 

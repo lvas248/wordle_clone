@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logoutSession } from '../Redux/Slices/sessionSlice'
 
 
-function Header({ toggleStatistics, toggleLeaderBoard}) {
+function Header({ toggleStatistics, toggleLeaderBoard, toggleHowTo, toggleAllOff }) {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -18,7 +18,10 @@ function Header({ toggleStatistics, toggleLeaderBoard}) {
     function logout(){
         dispatch(logoutSession())
         .then(res => {
-            if(res.meta.requestStatus === 'fulfilled') navigate('/')
+            if(res.meta.requestStatus === 'fulfilled'){ 
+                toggleAllOff()
+                navigate('/')
+            }
         })
     }
 
@@ -29,7 +32,7 @@ function Header({ toggleStatistics, toggleLeaderBoard}) {
 
         <div className={`${ loggedIn ? 'flex' : 'hidden'} headerBtnContainer`}>
 
-            <button onClick={()=>navigate('/how-to')}> <img  className='headerIcon' alt='text' src={howTo} /> </button>
+            <button onClick={toggleHowTo}> <img  className='headerIcon' alt='text' src={howTo} /> </button>
             <button onClick={toggleStatistics}> <img className='headerIcon' alt='text' src={stats} /> </button>
             <button onClick={toggleLeaderBoard}>  <img className='headerIcon' alt='text' src={leaderBoard} /> </button>
             <button> <img className='headerIcon' alt='text' src={settings} /> </button>

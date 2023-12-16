@@ -19,13 +19,30 @@ function App() {
   
   const [ displayStatistics, setDisplayStatistics ] = useState(false)
   const [ displayLeaderBoard, setDisplayLeaderBoard ] = useState(false)
+  const [ displayHowTo, setDisplayHowTo] = useState(false)
 
   function toggleStatistics(){
     setDisplayStatistics(!displayStatistics)
+    setDisplayHowTo(false)
+    setDisplayLeaderBoard(false)
   }
 
   function toggleLeaderBoard(){
     setDisplayLeaderBoard(!displayLeaderBoard)
+    setDisplayStatistics(false)
+    setDisplayHowTo(false)
+  }
+
+  function toggleHowTo(){
+    setDisplayHowTo(!displayHowTo)
+    setDisplayLeaderBoard(false)
+    setDisplayStatistics(false)
+  }
+
+  function toggleAllOff(){
+    setDisplayHowTo(false)
+    setDisplayLeaderBoard(false)
+    setDisplayStatistics(false)
   }
 
 
@@ -33,18 +50,19 @@ function App() {
     dispatch(refreshSession())
   },[])
 
-  const { guess_average, guess_distribution } = useSelector( state => state.stat.entity)
 
   return (
 
 
-      <div className="App bg-[#e3e3e1] min-h-screen relative">
+      <div className={`App bg-[#e3e3e1] min-h-screen relative `}>
 
-        <Header toggleStatistics={toggleStatistics} toggleLeaderBoard={toggleLeaderBoard}/>
+        <Header toggleStatistics={toggleStatistics} toggleLeaderBoard={toggleLeaderBoard} toggleHowTo={toggleHowTo} toggleAllOff={toggleAllOff}/>
 
         <StatisticsPage display={displayStatistics} toggleDisplay={toggleStatistics}/>
 
         <LeaderBoard display={displayLeaderBoard} toggleDisplay={toggleLeaderBoard} />
+
+        <HowTo  display={displayHowTo} toggleDisplay={toggleHowTo}/>
 
         <Routes>
 
@@ -55,9 +73,6 @@ function App() {
           <Route path='/signup' element={<Signup />}/>
 
           <Route path='/home' element={<Home />} />
-
-          <Route path='/how-to' element={<HowTo />} />
-
 
           <Route exact path='/' element={<Landing />} />
 
